@@ -120,7 +120,7 @@ If you take a look in the nscaledemo repository you will see a file named system
 ### Inspect the demo system
 Lets take a look at the nscaledemo system. Run the following command:
 
-	nds conainer list nscaledemo
+	nsd conainer list nscaledemo
 
 You shoudld see the following output
 
@@ -148,9 +148,9 @@ You should see an updated commit, i.e. a new immutable system revision that incl
 ### Deploying the container
 Lets deploy the container that we just built, run:
 
-	nsd revsion deploy nscale <revisionid>
+	nsd revision deploy nscale <revisionid>
 
-giving the revsion id from the top of the revision list. nscale will now deploy the container. You can check that the deploy went OK by running:
+giving the revision id from the top of the revision list. nscale will now deploy the container. You can check that the deploy went OK by running:
 
 	docker ps
 
