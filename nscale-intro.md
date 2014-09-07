@@ -84,7 +84,7 @@ nscale will read your git credentials and use them for making system commits as 
 ### List available systems
 nscale works with the concept of a system, a system is defined by a system definition file and holds all of the meta information required to build and deploy system containers. Lets check that the system list command works first. With the server running, execute the following command:
 
-	nds system list
+	nsd system list
 	
 You should see the following output
 
