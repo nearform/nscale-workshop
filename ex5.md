@@ -29,10 +29,21 @@ Check the site for the buggy alert:
 	echo $DOCKER_HOST
 	open http://<ip>:8000
 
+Roll back
+------------
+
 It's time to rollback, picking the **second** revision id:
 
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
+
+Check the site is working:
+
+	echo $DOCKER_HOST
+	open http://<ip>:8000
+
+Roll forward
+------------
 
 Remove the buggy alert:
 
