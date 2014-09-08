@@ -27,7 +27,7 @@ The kernel section in the config defines:
 
 The nscale root folder looks as follows.
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/configdir.png)
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/configdir.png)
 
 Viewing the logs
 ----------------
