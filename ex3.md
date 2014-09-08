@@ -11,7 +11,7 @@ Clone the Application
 ---------------------
 Lets get started by cloning the repository for a larger application. Run the following command:
 
-	nsd clone git@github.com:nearform/sudclocal.git
+	nsd system clone git@github.com:nearform/sudclocal.git
 
 This will pull down the code for the Startup Death Clock. Lets take a look at the system definition:
 
