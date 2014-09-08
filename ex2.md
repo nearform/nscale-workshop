@@ -209,7 +209,7 @@ Our container should be running just fine, we can use the following to see it in
 
 OS X : 
 ```bash
-$ curl http://$($DOCKER_HOST):8000
+$ curl http://$(boot2docker ip):8000
 ```
 
 Linux:
