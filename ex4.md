@@ -124,6 +124,9 @@ And run the following commands:
 	
 	nsd revision deploy sudc <revision id>
 	
+	echo $DOCKER_HOST
+	open http://<ip>:8000
+	
 Note that in a real system fixes would be made and committed to a git repository, and nscale will pull the latest changes before building a container.
 
 [Next up: exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md)
