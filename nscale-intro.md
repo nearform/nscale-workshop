@@ -154,8 +154,14 @@ giving the revision id from the top of the revision list. nscale will now deploy
 
 	docker ps
 
-You should see that there is one running container. Check that everything is OK by pointing your browser to the boot2docker ip address port 8000. You should see that the page loads and displays 'Hello world!'.
+You should see that there is one running container. Check that everything is OK by pointing your browser to the docker host ip address port 8000. You should see that the page loads and displays 'Hello world!'.
 
-	open http://$(boot2docker ip):8000
+	echo $DOCKER_HOST
+	open http://<ip>:8000
+
+Stop the running docker container before moving on to the next exercise.
+
+	docker ps
+	docker stop <container id>
 
 [Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
