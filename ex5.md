@@ -34,7 +34,11 @@ It's time to rollback, picking the **second** revision id:
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
 
-Edit the code again, remove the buggy alert and roll forward the change:
+Remove the buggy alert:
+
+	(cd ~/.nscale/data/build/sudc/startupdeathclock && git checkout web/public/js/app.js)
+
+Roll forward the change:
 
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
