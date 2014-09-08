@@ -41,8 +41,10 @@ GUI
 ---
 Lets now take a look at the startup death clock system using the graphical interface. Point your browser to http://localhost:9000 and browse to the container view.
 
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/containers.png)
 
-![image](http://)
+
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/revisions.png)
 
 
 
