@@ -11,11 +11,23 @@ Configuration
 -------------
 Before we proceed lets just take a look at the nscale configuration file. By default this is placed in ~/.nscale/config/config.json. Open this file up and inspect it. You should see that this file has several sections each of which controls various aspects of nscale.
 
-	DMC
+The kernel section in the config defines:
 
-.nscale folder
+	port - the port the nscale kernel should run on
+	systemsRoot - the full path where system data will reside
+	buildRoot - the full path where build data will reside
+	targetRoot - the full path where target data will reside
 
-	DMC
+	"kernel": {
+	  "port": "8010",
+	  "systemsRoot": "/Users/me/.nscale/data/systems",
+	  "buildRoot": "/Users/me/.nscale/data/build",
+	  "targetRoot": "/Users/me/.nscale/data/targets"
+	}
+
+The nscale root folder looks as follows.
+
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/configdir.png)
 
 Viewing the logs
 ----------------
@@ -24,9 +36,6 @@ You can view the nscale logs at any time by running
 	nsd server logs
 	nsd server logs api.log
 	nsd server logs web.log
-	
-	DMC - just a tail
-
 
 Make the fix
 ------------
