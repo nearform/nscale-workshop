@@ -83,3 +83,5 @@ Lets go ahead and run the deployment:
 nscale will now execute the deployment that we previewed in the last step. Once this completes you shuold have a running system composed of four docker containers. To check that all is working point your browser to http://<dockerhost>:8000. You should see the running startup death clock:
 
 	IMG HERE
+
+[Next up: exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md)
