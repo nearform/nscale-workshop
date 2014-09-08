@@ -111,16 +111,16 @@ You should see the following output:
 	nscaledemo                     e1144711-47bb-5931-9117-94f01dd20f6f
 
 ### Under the hood
-nscale uses a configuration file to tell it where to store its data. The default configuration is kept at /usr/local/etc/nscale/config.json. Take a moment to inspect the configuration.
+nscale uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Take a moment to inspect the configuration.
 
-You should see from the configuration that nscale keeps its data in /usr/local/var/nscale/data. If you look in this directory you should see a directory named nscaledemo. This is the git repostory that we cloned in the previous step.
+You should see from the configuration that nscale keeps its data in ~/.nscale/data. If you look in the ~/.nscale/data/systems directory you should see a directory named nscaledemo. This is the git repostory that we cloned in the previous step.
 
 If you take a look in the nscaledemo repository you will see a file named system.json. Open this file and inspect the contents. System.json holds the configuration for the nscaledemo system and tells nscale the containers that it should build and deploy.
 
 ### Inspect the demo system
 Lets take a look at the nscaledemo system. Run the following command:
 
-	nsd conainer list nscaledemo
+	nsd container list nscaledemo
 
 You shoudld see the following output
 
@@ -128,7 +128,7 @@ You shoudld see the following output
 	Machine              virtualbox      85d99b2c-06d0-5485-9501-4d4ed429799c                               ""
 	web                  boot2docker     9ddc6c027-9ce2-5fdg-9936-696d2b3789bb              0.0.1           {}
 	
-There are two containers definitions, a virtual box host and a boot2docker container. Lets take a look at the revision history:
+There are two containers definitions, a virtual box host and a boot2docker container. Let's take a look at the revision history:
 
 	nsd revision list nscaledemo
 
@@ -155,3 +155,5 @@ giving the revision id from the top of the revision list. nscale will now deploy
 	docker ps
 
 You should see that there is one running container. Check that everything is OK by pointing your browser to the boot2docker ip address port 8000. You should see that the page loads and displays 'Hello world!'.
+
+	open http://$(boot2docker ip):8000
