@@ -11,7 +11,7 @@ Configuration
 -------------
 Before we proceed lets just take a look at the nscale configuration file. By default this is placed in ~/.nscale/config/config.json. Open this file up and inspect it. You should see that this file has several sections each of which controls various aspects of nscale.
 
-The kernel section in the config defines:
+The kernel section defines the following:
 
 	port - the port the nscale kernel should run on
 	systemsRoot - the full path where system data will reside
@@ -25,7 +25,77 @@ The kernel section in the config defines:
 	  "targetRoot": "/Users/me/.nscale/data/targets"
 	}
 
-The nscale root folder looks as follows.
+The api section defines the following:
+
+	port - the port the nscale api should run on
+	sdkhost and sdkport - the host and port where the nscale sdk is running on
+	https - true if running on https, false otherwise
+	cors and github - required config settings when github login feature has been released
+
+	"api": {
+	  "port": 3000,
+	  "sdkhost": "localhost",
+	  "sdkport": "3223",
+	  "https": false,
+	  "cors": {
+	    ...
+	  },
+	  "github": {
+	    ...
+	  }
+	}
+	
+The web section defines the following:
+
+	ip and port - the ip and port the nscale web gui should run on
+	apiserver and apibase - the host, port and base where the nscale api is running on
+	
+	"web": {
+	  "ip": "0.0.0.0",
+	  "port": 9000,
+	  "apiserver": "http://localhost:3000",
+	  "apibase": "/api/1.0"
+	}
+
+The modules section defines the following:
+
+	protocol - server side command protocol
+	authorization - nscale auth module
+	analysis - nscale analyzer module
+	
+	"modules": {
+	  "protocol": {
+	    "require": "nscale-protocol",
+	    "specific": {}
+	  },
+	  "authorization": {
+	    "require": "nscale-noauth",
+	    "specific": {
+	      "credentialsPath": "/Users/me/.nscale/data"
+	    }
+	  },
+	  "analysis": {
+	    "require": "nscale-boot2docker-analyzer",
+	    "specific": {}
+	  }
+	}
+	
+The containers section defines the following:
+
+	containers - list of supported containers
+
+	"containers": [
+	  {"require": "virtualbox-container",
+	    "type": "virtualbox",
+	    "specific": {}
+	  },
+	  {"require": "boot2docker-container",
+	    "type": "boot2docker",
+	    "specific": {"imageCachePath": "/tmp"}
+	  }
+	]
+
+The nscale root folder looks as follows:
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/configdir.png)
 
