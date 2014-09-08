@@ -1,11 +1,11 @@
 Build a system with NScale
 ===================
 
-This tutorial teaches you:
+This tutorial covers:
 
-1. Create a new system
-2. Hook up a new container definition
-3. Build a new container
+1. Creating a new system
+2. Hooking up a new container definition
+3. Building a new container
 4. Run!
 
 Create a new System
@@ -13,14 +13,14 @@ Create a new System
 
 A system is just a git repository, like the one you cloned in
 the previous step.
-That system definition contains everything nscale needs to
+That system definition contains everything `nscale` needs to
 know to deploy your application.
 
-Go ahead and create a new system with:
+Let's go ahead and create a new system with:
 
   nsd sys create
 
-It will ask some questions, just answer:
+It will ask some questions, we can answer as follows:
 
   prompt: name:  workshop
   prompt: namespace:  nscale
@@ -28,13 +28,14 @@ It will ask some questions, just answer:
   prompt: confirm (y/n):  y
   ok
 
-Check that everything is ok with:
+Now we can check that everything is as expected:
 
   nsd sys list
 
-(In nscale, you can shorten up commands down to 3 chars.)
+(In `nscale`, you can shorten commands down to 3 chars.)
 
-You will get all your systems, and our new nscale_workshop:
+The `list` command will return any systems that `nsd` is aware of, 
+including our new `nscale_workshop` system:
 
   Name                           Id
   workshop                       521a3a73-7d5d-434d-96c5-e4732db307be
@@ -52,30 +53,28 @@ There are three files:
 Preparing the Application
 -------------------------
 
-In order to build a container, it needs to live in a git
-repository, so that nscale can check it out and build it for you.
+Containers should live in a git repository, this allows `nscale` to check 
+out the repo and build the containers for us.
 
-Take the example you built for the [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and put in a git repository on github.
+Let's take the example we built in [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and place it in a git repository on github.
 
-Over there, you need to add one more file, an sh script where you can
-customize how the container will be built. In our case, this is really
-simple:
+We'll also include an `bash` script in our new repo, that can customize
+how the container will be built. In our case, this is really simple:
 
   #!/bin/bash
 
   echo TARGET:.
 
-Copy this and add it to your app as `build.sh`
+We'll name this `build.sh`
 
-Thanks to this .sh file, you can build multiple containers from the same
-git repository.
+Now we can build multiple containers from the same git repository.
 
 In this tutorial, our test repo will be: git@github.com:nearform/nscale-workshop-intro-docker-sample.git
 
 Add a container definition
 --------------------------
 
-Open `system.json` in your favorite editor. It looks like:
+Let's open `system.json` in you favorite editor. It looks like this:
 
 ```js
 {
@@ -89,11 +88,7 @@ Open `system.json` in your favorite editor. It looks like:
   }
 }
 ```
-
-It has no container definition (how to build a container) and no actual
-container. We will add those in 
-
-First, we need to add the container definitions:
+To begin creating a system, we need to add the container definitions:
 
 ```js
 {
@@ -160,7 +155,7 @@ section:
   }
 }
 
-In order to tell nscale of these new containers, we need to create a new
+Finally for nscale to be aware of our new containers, we create a new
 git commit in the system git repo. 
 
   git commit -a -m 'new containers'
@@ -178,15 +173,15 @@ which should output:
   6cd3208029943c209a5… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:03:06.000Z  Updated container definition.
   f398e76c26114173a18… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T21:45:22.000Z  first commit
 
-In order to build our container, let's launch:
+Now, let's buid our containers:
 
   nsd container build workshop web
 
-Launch again
+We'll check the revision list again:
 
   nsd rev list workshop
 
-And see the changes:
+We should be able to see our changes:
 
   revision             deployed who                                                     time                      description
   8735764f9e57b9838b1… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:08:11.000Z  built container: cf28904e57b0c4b84b24d0297820e8a6…
@@ -196,16 +191,18 @@ And see the changes:
 Deploy
 ------
 
-In order to deploy our new revision, you should:
+All we have to do now is deploy:
 
   nsd rev deploy workshop 8735
 
-That 8735 are just the first chars of the revision identifier from `nsd rev list`
+The 8735 part is just the first chars of the revision identifier from `nsd rev list`
 
-Your container should be running just fine, launch:
+Our container should be running just fine, we can use the following to see it in action:
 
-  curl http://<docker host:port>
+OS X:
+  curl http://$($DOCKER_HOST):8000
 
-To see it working!
+Linux:
+  curl http://localhost:8000
 
 [Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
