@@ -13,7 +13,7 @@ Lets get started by cloning the repository for a larger application. Run the fol
 
 	nsd system clone git@github.com:nearform/sudclocal.git
 
-This will pull down the code for the Startup Death Clock. Lets take a look at the system definition:
+This will pull down the code for the Startup Death Clock system. Lets take a look at the system definition:
 
 	nsd container list sudc
 	
