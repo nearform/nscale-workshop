@@ -40,6 +40,7 @@ Remove the buggy alert:
 
 Roll forward the change:
 
+	nsd container buid sudc web
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
 	
