@@ -3,48 +3,45 @@ Rollback
 
 This tutorial teaches you:
 
-1. Roll system back to known good state
-2. Roll system forward after applying a full fix
+1. Roll the system back to a known good state
+2. Roll the system forward after applying a full fix
 
+Add a buggy alert
+------------
 
-open ~/.nscale/data/build/sudc/startupdeathclock/web/public/js/app.js
+Open ~/.nscale/data/build/sudc/startupdeathclock/web/public/js/app.js and add an alert after the 'Your code here' comment:
 
-insert the bug dialog
-
-	require(['config', 'death'], function (config, death) {
-	console.log(death)
-	var app = {
+	...
         initialize: function () {
-			alert('whoops');
-            // Your code here
+          // Your code here
+          alert('whoops');
         }
-    };
-	app.initialize();
-	});
+	...
 
-Build the container
+Build the container and deploy the latest revision:
 
 	nsd container buid sudc web
+	nsd revision list sudc
+	nsd revision deploy sudc <revision id>
+
+Check the site for the buggy alert:
+
+	echo $DOCKER_HOST
+	open http://<ip>:8000
+
+It's time to rollback, picking the **second** revision id:
+
+	nsd revision list sudc
+	nsd revision deploy sudc <revision id>
+
+Edit the code again, remove the buggy alert and roll forward the change:
+
+	nsd revision list sudc
+	nsd revision deploy sudc <revision id>
 	
-Deploy the system
+Check the site is working:
 
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
+	echo $DOCKER_HOST
+	open http://<ip>:8000
 
-Check the site out http://<boot2dockerip>:8000
-
-See the error dialog
-
-Rollback
-
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
-
-edit the code again and fix it
-
-Roll forward
-
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
-
-
+[Next up: exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md)
