@@ -5,7 +5,7 @@ This tutorial teaches you:
 
 1. How to deploy a larger application
 2. Run a preview before deploying
-2. nscale web gui
+2. To walk through the nscale web gui
 
 Clone the Application
 ---------------------
