@@ -65,10 +65,6 @@ Before we deploy the system lets take a look at the commands that will be execut
 
 	nsd revision list sudc
 
-Next lets preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
-
-	nsd revision preview sudc <revision id>
-
 You should see some output similar to the following:
 
 	revision             deployed who                                                     time                      description                                       
@@ -80,6 +76,28 @@ You should see some output similar to the following:
 	3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition                           
 	644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
 
+Next lets preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
+
+	nsd revision preview sudc <revision id>
+
+You should see some output similar to the following:
+
+	execution plan: 
+	Command                        Id                                                
+	unlink                         1973bbff-6f80-4f40-ae79-805f04f81690              
+	stop                           1973bbff-6f80-4f40-ae79-805f04f81690              
+	remove                         1973bbff-6f80-4f40-ae79-805f04f81690              
+	add                            a8602f4d-16ff-4dfa-a6d7-3ed79662d50f              
+	start                          a8602f4d-16ff-4dfa-a6d7-3ed79662d50f              
+	link                           a8602f4d-16ff-4dfa-a6d7-3ed79662d50f              
+
+	operations: 
+	Host                 Command                                                                                                                                               
+	localhost            docker kill 81bbf1284e5fee5b5f3e73c49b27c76b7b6303b2f738fb4d83b7a2fcd03c18fd                                                                          
+	localhost            docker ps -a --no-trunc | grep Exit | awk '{print $1}' | xargs -I {} docker rm {}                                                                     
+	localhost            docker images --no-trunc| grep none | awk '{print $3}' | xargs -I {} docker rmi {}                                                                    
+	localhost            docker run -e WEB_HOST=10.75.29.243 -p 8000:8000 -d sudc/web-223 sh /web/run.sh
+
 to produce this view nscale has computed a delta between what the latest revisions of the system should look like compared with what is actually running on your system. 
 
 Run the deployment
@@ -88,7 +106,10 @@ Lets go ahead and run the deployment:
 
 	nsd revision deploy sudc <revision id>
 
-nscale will now execute the deployment that we previewed in the last step. Once this completes you should have a running system composed of four docker containers. To check that all is working point your browser to http://<dockerhost>:8000. You should see the running startup death clock:
+nscale will now execute the deployment that we previewed in the last step. Once this completes you should have a running system composed of four docker containers. To check that all is working point your browser to the docker host ip address port 8000. You should see the running startup death clock:
+
+	echo $DOCKER_HOST
+	open http://<ip>:8000
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/sudc.png)
 
