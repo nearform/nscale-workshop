@@ -157,3 +157,5 @@ giving the revision id from the top of the revision list. nscale will now deploy
 You should see that there is one running container. Check that everything is OK by pointing your browser to the boot2docker ip address port 8000. You should see that the page loads and displays 'Hello world!'.
 
 	open http://$(boot2docker ip):8000
+
+[Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
