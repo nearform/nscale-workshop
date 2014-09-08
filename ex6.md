@@ -1,7 +1,7 @@
 Check and fix
 =============
 
-This tutorial teaches you:
+This tutorial teaches you to:
 
 1. Verify that the system is running ok as expected
 2. Fix the system after two containers are killed off
