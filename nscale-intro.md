@@ -74,7 +74,7 @@ to stop the server run
 
 	nsd server stop
 
-### Setting credential
+### Setting credentials
 First off we need to tell nscale who you are. To do this run:
 
 	nsd login
@@ -99,7 +99,7 @@ Lets clone an example 'hello world' system. There is one already prepared at:
 
 To grab this system run:
 
-	nsd clone git@github.com:nearform/nscaledemo.git
+	nsd system clone git@github.com:nearform/nscaledemo.git
 
 Let's check that this all went OK by running a system list command
 
