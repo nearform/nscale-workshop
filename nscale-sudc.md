@@ -1,7 +1,7 @@
 NScale StartUp Death Clock
 ==========================
 
-This tutorial teaches you:
+This tutorial covers:
 
 1. how to deploy a larger application, with multiple services (SUDC)
 2. what is a revision, and how to move our system through them (deploy)
