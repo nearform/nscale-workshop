@@ -1,26 +1,28 @@
 NScale Intro
 ============
 
-This tutorial teaches you:
+This tutorial covers:
 
-1. what is nscale
+1. what `nscale` is
 2. how to install it
 2. how to use it locally
-3. deploy a simple web app on nscale
+3. deploying a simple web app with `nscale`
 
 What is nscale?
 ---------------
-nscale is an opensource deployment project. It grew out of a need to deploy microservice based systems. After having created custom scripts for deployment on several projects, nscale was created to stop us having to re-invent the wheel every time.
+`nscale` is an open source deployment management toolkit. After working on several microservice projects, we found there was a need to formalize a process for deploying microservice based systems so we could stop reinventing the wheel for each new project.
 
-nscale uses docker to create and deploy containerised applications and services.
+`nscale` uses Docker to create and deploy containerised applications and services.
 
-### Prerequisits
+### Prerequisites
 
 #### Docker
-you should have docker installed on your system as per the previous exercise. 
+We should have docker installed on our system as per the previous exercise. 
 
 #### Git
-nscale uses git to track revision history so you will need git installed on your system. In order for nscale to track revisions correctly you will need to ensure that you have configured your git username and email. Do the following:
+`nscale` uses git to track revision history so we will need git installed on our system. We need to configure our `git` username and email for `nscale` to track revisions correctly. 
+
+Let's do the following:
 
 Set git username
 
@@ -31,15 +33,15 @@ Set git email
 	git config --global user.email "you@somewhere.com"
 
 ### Installation
-nscale is installed though npm. To install it run the following:
+`nscale` is installed though `npm`. To install it, we run the following:
 
 	sudo npm install -g nscale
 
-Check that the installation went OK by running the nscale command line client:
+We can do a quick check to verify installation success by running the `nscale` command line client:
 
 	nsd help
 	
-You should see output similar to the following:
+We should see output similar to the following:
 
 	-[ server ]----------
 	server start [config]                 - start the server
@@ -66,63 +68,73 @@ You should see output similar to the following:
  
 
 ### Run the server
-nscale runs as a server with a command line client and web interface. To start the server run:
+
+`nscale` runs as a server with a command line client and web interface. 
+To start the server we run:
 
 	nsd server start
 
-to stop the server run
+To stop the server we run:
 
 	nsd server stop
 
 ### Setting credentials
-First off we need to tell nscale who you are. To do this run:
+We need to tell `nscale` who you are:
 
 	nsd login
 	
-nscale will read your git credentials and use them for making system commits as you build and deploy containers.
+`nscale` will read our git credentials and use them for making system commits as we build and deploy containers.
 
 ### List available systems
-nscale works with the concept of a system, a system is defined by a system definition file and holds all of the meta information required to build and deploy system containers. Lets check that the system list command works first. With the server running, execute the following command:
+`nscale` utilizes the concept of a system, which is a collection of containers (containers being Docker containers, virtual machines, physical machines or anything that can hold
+our microservices) arranged according a topological deployment strategy.
+
+A system is defined by a system definition file and holds all of the meta information required to build and deploy system containers. 
+
+Let's check that the `system list` command works. 
+
+With the `nsd server` running, let's execute the following command:
 
 	nsd system list
 	
-You should see the following output
+We should see the following output
 
 	Name                           Id
 
-Thats because there are as yet no systems defined.
+That's because there are as yet no systems defined.
 
 ### Clone a system
-Lets clone an example 'hello world' system. There is one already prepared at:
+
+Let's clone an example 'hello world' system. There is one already prepared at:
 
 	git@github.com:nearform/nscaledemo.git
 
-To grab this system run:
+To grab this system we run:
 
 	nsd system clone git@github.com:nearform/nscaledemo.git
 
-Let's check that this all went OK by running a system list command
+Let's check that this the system was cloned with the `list` command:
 
 	nsd system list
 
-You should see the following output:
+We should see the following output:
 
 	Name                           Id
 	nscaledemo                     e1144711-47bb-5931-9117-94f01dd20f6f
 
 ### Under the hood
-nscale uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Take a moment to inspect the configuration.
+`nscale` uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Let's take a moment to inspect the configuration.
 
-You should see from the configuration that nscale keeps its data in ~/.nscale/data. If you look in the ~/.nscale/data/systems directory you should see a directory named nscaledemo. This is the git repostory that we cloned in the previous step.
+We should see from the configuration that nscale keeps its data in ~/.nscale/data. If we look in the ~/.nscale/data/systems directory we should see a directory named nscaledemo. This is the git repostory that we cloned in the previous step.
 
-If you take a look in the nscaledemo repository you will see a file named system.json. Open this file and inspect the contents. System.json holds the configuration for the nscaledemo system and tells nscale the containers that it should build and deploy.
+If we take a look in the nscaledemo repository we should see a file named `system.json`. Let's open this file and inspect the contents. The `system.json` file holds the configuration for the `nscaledemo` system, defining the containers that it should build and deploy.
 
 ### Inspect the demo system
-Lets take a look at the nscaledemo system. Run the following command:
+Let's inspect the `nscaledemo` system:
 
 	nsd container list nscaledemo
 
-You shoudld see the following output
+We should see the following output:
 
 	Name                 Type            Id                                                 	Version         Dependencies
 	Machine              virtualbox      85d99b2c-06d0-5485-9501-4d4ed429799c                               ""
@@ -132,32 +144,38 @@ There are two containers definitions, a virtual box host and a boot2docker conta
 
 	nsd revision list nscaledemo
 
-You should see a list of system revisions.
+We should see a list of system revisions.
 
 ### Building a container
-Lets now build the example web container. Run the following:
+Let's now build the example web container by running the following:
 
 	nsd container build nscaledemo web
 
-nscale will build the nscaledemo web container ready for deployment. Once the command completes check the revision history:
+`nscale` will build the `nscaledemo` web container so that it's ready to be deployed. 
+
+Once the command completes we can check the revision history:
 
 	nsd revision list nscaledemo
 
-You should see an updated commit, i.e. a new immutable system revision that includes the freshly built container.
+We should see an updated commit, that is, a new immutable system revision that includes the freshly built container.
 
 ### Deploying the container
-Lets deploy the container that we just built, run:
+Let's deploy the container that we just built, run:
 
 	nsd revision deploy nscale <revisionid>
 
-giving the revision id from the top of the revision list. nscale will now deploy the container. You can check that the deploy went OK by running:
+giving the revision id from the top of the revision list. 
+
+`nscale` will now deploy the container. We can check that the deploy went as planned using Docker like so:
 
 	docker ps
 
-You should see that there is one running container. Check that everything is OK by pointing your browser to the docker host ip address port 8000. You should see that the page loads and displays 'Hello world!'.
+We should see that there is one running container. We can futher verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`. 
 
-	echo $DOCKER_HOST
-	open http://<ip>:8000
+	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://localhost:8000 # linux
+
+The page should load and display 'Hello world!'.
 
 Stop the running docker container before moving on to the next exercise.
 
