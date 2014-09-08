@@ -39,24 +39,25 @@ After those have all completed you should have four containers ready for deploym
 
 GUI
 ---
-Lets now take a look at the startup death clock system using the graphical interface. Point your browser to <a href="http://localhost:9000" target="_blank">http://localhost:9000</a> and browse to the container view.
+Lets now take a look at the startup death clock system using the graphical interface. Point your browser to <a href="http://localhost:9000" target="_blank">http://localhost:9000</a>.
+
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/systems.png)
+
+Click on the sudclocal link to go to the container view.
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/containers.png)
 
+Show the revision list by clicking on the Revisions tab.
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/revisions.png)
 
+Show the system state by clicking on the System state tab.
+
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/topology.png)
 
+Show the timeline by clicking on the timeline tab.
 
-
-	IMG CONTIAINERS
-	
-	IMG TOPOLOGY
-	
-	IMG REVISIONS
-	
-	IMG TIMELINE
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/timeline.png)
 	
 Previewing the deployment
 -------------------------
