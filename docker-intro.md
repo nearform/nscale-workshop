@@ -2,7 +2,7 @@
 Docker Introduction
 ===================
 
-This exercise walks you through:
+This exercise walks through:
 
 1. installing Docker
 2. grasping Docker fundamentals

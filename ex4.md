@@ -1,15 +1,15 @@
 Fixing a bug
 ============
 
-This tutorial teaches you:
+This tutorial covers:
 
 1. The nscale configuration file
-2. How to view nscale server logs
-3. Deploy a bugfix to the startup death clock
+2. How to view `nscale` server logs
+3. Deploying a bugfix to the startup death clock
 
 Configuration
 -------------
-Before we proceed lets just take a look at the nscale configuration file. By default this is placed in ~/.nscale/config/config.json. Open this file up and inspect it. You should see that this file has several sections each of which controls various aspects of nscale.
+Before we proceed let's just take a look at the `nscale` configuration file. By default this is placed in ~/.nscale/config/config.json. When we open this file up and inspect it we'll see a JSON file containing several sections that control various aspects of `nscale`.
 
 The kernel section defines the following:
 
@@ -95,13 +95,13 @@ The containers section defines the following:
 	  }
 	]
 
-The nscale root folder looks as follows:
+The `nscale` root folder looks as follows:
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/configdir.png)
 
 Viewing the logs
 ----------------
-You can view the nscale logs at any time by running 
+We can view the nscale logs at any time by running 
 
 	nsd server logs
 	nsd server logs api.log
@@ -109,11 +109,11 @@ You can view the nscale logs at any time by running
 
 Make the fix
 ------------
-There is a problem with our Startup Death Clock application. The home pages reads 'Click' instead of 'Clock'.
+There is a problem with our Startup Death Clock application. The home page reads 'Click' instead of 'Clock'.
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/click.png)
 
-We need to get this fixed and deployed right away. Let's go ahead and make the fix. Replace 'Click' with 'Clock' in the following file: 
+We need to get this fixed and deployed right away. Let's go ahead and make the fix. Let's replace 'Click' with 'Clock': 
 
 	sed -i .bak -e s/Click/Clock/g -e s/click/clock/g ~/.nscale/data/build/sudc/startupdeathclock/web/public/templates/index.dust
 	(cd ~/.nscale/data/build/sudc/startupdeathclock && git diff)
@@ -132,7 +132,7 @@ And run the following commands:
 	open http://<ip>:8000
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/clock.png)
-	
-Note that in a real system fixes would be made and committed to a git repository, and nscale will pull the latest changes before building a container.
+
+In a real system, fixes would be made and committed to a git repository and nscale would pull the latest changes before building a container.
 
 [Next up: exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md)
