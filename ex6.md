@@ -1,16 +1,30 @@
 Check and fix
 =============
 
-Verify sudc is running
+This tutorial teaches you to:
+
+1. Verify that the system is running ok as expected
+2. Fix the system after two containers are killed off
+
+Verify sudc is running ok
 -------------
+
+Open the sudc application in the browser:
 
 	echo $DOCKER_HOST
 	open http://<ip>:8000
 	
-Check sudc is working as expected with the following commands:
+Let's double check that sudc is working as expected by running:
+
+	nsd system check sudc
+	
+You should see the following output:
+
+	Looking good! No deviation detected
+	
+The check command runs a system analysis to verify that everything is looking good! You can see the output of that analysis by running:
 
 	nsd system analyze sudc
-	nsd system check sudc
 
 Kill two of the containers
 -------------
@@ -26,7 +40,7 @@ Verify sudc is not running:
 	echo $DOCKER_HOST
 	open http://<ip>:8000
 
-And check again:
+And do the check again:
 
 	nsd system check sudc
 	
@@ -54,7 +68,7 @@ You should see some output similar to the following:
 System fix and get sudc up and running again
 -------------	
 
-Fix it using:
+Let's do a system fix to get sudc up and running again:
 
 	nsd system fix sudc
 	

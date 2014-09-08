@@ -2,19 +2,23 @@
 Docker Introduction
 ===================
 
-This exercise let you:
+This exercise walks you through:
 
-1. learn and install docker
-2. build a static web site on docker
+1. installing Docker
+2. grasping Docker fundamentals
+3. deploying a static website inside a Docker container
 
 What is Docker?
 ---------------
 
 ![Docker](https://d3oypxn00j2a10.cloudfront.net/0.9.0/images/pages/brand_guidelines/small_v.png)
 
-Docker is coolest tech for deploying your applications, Docker allows you to write a 'recipe' for building your application in a file called `Dockerfile`. In it, you write commands using bash, the same tool you know and love!
-
-Thanks to Docker, an application is wrapped in a _container_.
+Docker is an awesome tool we can use to deploy production systems. It allows us to isolate
+our code in completely clean system environments. The `Dockerfile` is a sort of installtion
+'recipe' that can be used to initialize a system enviornment. A Docker container is a 
+fresh Linux environment that bootstraps from a host systems Linux kernel - this gives us a lot
+of the benefits of the VM but without the slow execution and bulk often associated with
+VMs.
 
 ### Installation
 
@@ -22,36 +26,42 @@ If you are Linux, follow https://github.com/nearform/nscale/wiki/Linux-Setup-Gui
 
 If you are on Mac OS X, follow https://github.com/nearform/nscale/wiki/OS-X-Setup-Guide
 
-Obviously, if you still have the cited software, you can skip the relevant steps.
+If any software listed in the guides is already installed on your system, you can
+of course skip those steps. 
 
-### Basic kwnoledge of Docker
+### Basic knowledge of Docker
 
-To check if you instance works, you should be able to run:
+Let's do a quick sanity check:
 
 ```bash
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 `````
 
-Which means that you have no containers running. Don't worry, we'll build one shortly.
+Docker hasn't complained so we're good to go, the output shows
+that we have no containers running. Don't worry, we'll build one shortly.
 
-### Run Node.js
+### Run Node.js in a Docker container
 
-To run node.js with Docker, you can run:
+The following command will start a Node REPL inside a Docker container
 
 ```bash
 $ docker run -it --rm dockerfile/nodejs node
 ```
 
-which starts the same REPL that you can start typing `node`
+This command pulls in the `nodejs` from `dockerfile.github.io`,
+tells Docker to open an interactive terminal into the
+continer and runs the `node` executable, thus giving us the 
+Node REPL.
 
-Your static website on Docker
+
+Our static website on Docker
 -----------------------------
 
 ### Project Setup
 
-First of all, create a new directory, and a new git repository, you
-might need this shortly:
+First let's create a new directory and intialize a new git repo
+inside it:
 
 ```bash
 $ mkdir mystatic
@@ -61,7 +71,7 @@ $ git init
 
 ### Sample Application
 
-Take the code that has make node famous:
+Let's use the canonincal Node.js web server example:
 
 ```js
 var http = require('http');
@@ -73,23 +83,23 @@ http.createServer(function (req, res) {
 console.log('Server running on port', port);
 ```
 
-and write it to a file named `app.js`.
+We'll save that in a file named `app.js`.
 
-You can test it locally:
+We can test it in the usual way:
 ```bash
 $ node app.js
 ```
 
-In another shell:
+Then in another shell:
 ```bash
 $ curl http://localhost:1337
 ```
 
 ### Dockerize!
 
-In order to build a container, we need a `Dockerfile`.
+Now we're going to build a container around the web server.
 
-Here is one to build our app:
+To get started we need a recipe list: the `Dockerfile`:
 
 ```
 # The world-famous node.js hello world
@@ -110,34 +120,41 @@ EXPOSE 1337
 ENTRYPOINT ["node", "/src/app.js"]
 ```
 
-You can build it by typing:
+We can build it by typing:
 ```bash
 $ docker build .
-.. lots of stuff
+```
 
+Which will eventually output:
+```bash
 Successfully built <containerid>
 ```
 
-Then:
+Next we run our container with:
+
 ```bash
 docker run -p 80:1337 <containerid>
 ```
-
 (copy paste the container id from the previous command)
 
 
-In another shell:
+Finally we can make a request to our container, in another
+shell.
+
+If we're using OS X we're using boot2docker which is actually a Linux VM,
+we need to use the $DOCKER_HOST environment variable to access the VM's
+localhost.
+
 ```bash
-$ curl http://<DOCKER_HOST>:1337
+$ curl http://$(echo $DOCKER_HOST):1337
+```
+Otherwise, if we're using Linux we simply request localhost:
+
+```bash
+$ curl http://localhost:1337
 ```
 
-you can get your DOCKER_HOST ip address by typing:
-```bash
-echo $DOCKER_HOST
-```
 
-(if you are on boot2docker)
-
-The end result is here:
-https://github.com/nearform/nscale-workshop-intro-docker-sample
+Here's one we made earlier: 
+<https://github.com/nearform/nscale-workshop-intro-docker-sample>
 

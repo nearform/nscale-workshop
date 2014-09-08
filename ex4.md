@@ -109,7 +109,11 @@ You can view the nscale logs at any time by running
 
 Make the fix
 ------------
-There is a problem with our Startup Death Clock application. The home pages reads 'Click' instead of 'Clock'. We need to get this fixed and deployed right away. Let's go ahead and make the fix. Replace 'Click' with 'Clock' in the following file: 
+There is a problem with our Startup Death Clock application. The home pages reads 'Click' instead of 'Clock'.
+
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/click.png)
+
+We need to get this fixed and deployed right away. Let's go ahead and make the fix. Replace 'Click' with 'Clock' in the following file: 
 
 	sed -i .bak -e s/Click/Clock/g -e s/click/clock/g ~/.nscale/data/build/sudc/startupdeathclock/web/public/templates/index.dust
 	(cd ~/.nscale/data/build/sudc/startupdeathclock && git diff)
@@ -126,6 +130,8 @@ And run the following commands:
 	
 	echo $DOCKER_HOST
 	open http://<ip>:8000
+
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/clock.png)
 	
 Note that in a real system fixes would be made and committed to a git repository, and nscale will pull the latest changes before building a container.
 
