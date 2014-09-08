@@ -30,11 +30,20 @@ You can view the nscale logs at any time by running
 
 Make the fix
 ------------
-There is a problem with our Starup Death Clock application. The home pages reads 'click' instead of 'clock'. We need to get this fixed an deployed right away. Lets go ahead and make the fix. Open up the following file:
+There is a problem with our Starup Death Clock application. The home pages reads 'click' instead of 'clock'. We need to get this fixed and deployed right away. Lets go ahead and make the fix. Open up the following file: 
 
+.nscale/data/build/sudc/startupdeathclock/web/public/templates/index.dust
 
+change click to clock
 
-
+	nsd container build sudc web
+	
+	nsd revision list sudc
+	
+	nsd revision previes sudc
+	
+	nsd revision deploy sudc
+	
 Note that in a real system fixes would be made and committed to a git repository, nscale will pull the latest changes before building a container.
 
 

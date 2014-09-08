@@ -46,6 +46,7 @@ Lets now take a look at the startup death clock system using the graphical inter
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/revisions.png)
 
+![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/topology.png)
 
 
 
@@ -82,14 +83,3 @@ Lets go ahead and run the deployment:
 nscale will now execute the deployment that we previewed in the last step. Once this completes you shuold have a running system composed of four docker containers. To check that all is working point your browser to http://<dockerhost>:8000. You should see the running startup death clock:
 
 	IMG HERE
-
-
-
-
-
-
-
-
-
-	
-
