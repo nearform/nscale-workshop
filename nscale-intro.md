@@ -32,6 +32,12 @@ Set git email
 
 	git config --global user.email "you@somewhere.com"
 
+
+### local linux setup
+If you are following along on liux you will need to change permissions on the local docker socket. for exmpple if you are logged in as the user ubuntu you should run the following command
+
+sudo chown -R ubuntu:ubuntu /var/run/docker.sock
+
 ### Installation
 `nscale` is installed though `npm`. To install it, we run the following:
 
@@ -109,11 +115,16 @@ Let's clone an example 'hello world' system. There is one already prepared at:
 
 	git@github.com:nearform/nscaledemo.git
 
+Create a clean working folder on your machine and cd into it.
+
+  mkdir test
+  cd test
+
 To grab this system we run:
 
 	nsd system clone git@github.com:nearform/nscaledemo.git
 
-Let's check that this the system was cloned with the `list` command:
+nscale should have cloned this respository into your current working directory. You should now see a folder called nscaledemo. Let's check that nscale can see this with the `list` command:
 
 	nsd system list
 
@@ -125,7 +136,7 @@ We should see the following output:
 ### Under the hood
 `nscale` uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Let's take a moment to inspect the configuration.
 
-We should see from the configuration that nscale keeps its data in ~/.nscale/data. If we look in the ~/.nscale/data/systems directory we should see a directory named nscaledemo. This is the git repostory that we cloned in the previous step.
+We should see from the configuration that nscale keeps its data in ~/.nscale/data.
 
 If we take a look in the nscaledemo repository we should see a file named `system.json`. Let's open this file and inspect the contents. The `system.json` file holds the configuration for the `nscaledemo` system, defining the containers that it should build and deploy.
 
