@@ -11,7 +11,7 @@ Verify sudc is running
 
 Open the sudc application in the browser:
 
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 	
 Let's double check that `sudc` is working as expected by running:
@@ -38,7 +38,7 @@ Now we'll kill the `web` and `doc-srv` containers:
 
 Then we'll verify sudc is not running:
 
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
 The address should be unreachable. 
@@ -79,6 +79,6 @@ And check `sudc` is working as expected again:
 
 	nsd system check sudc
 	
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
