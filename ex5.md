@@ -25,8 +25,7 @@ Build the container and deploy the latest revision:
 
 Check the site for the buggy alert:
 
-	echo $DOCKER_HOST
-	open http://<ip>:8000
+	open http://$(boot2docker ip):8000
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/bugalert.png)
 
@@ -40,7 +39,7 @@ It's time to quickly rollback, picking the **second** revision id:
 
 Check the site is working:
     
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
 Roll forward
@@ -60,7 +59,7 @@ Roll forward the change:
 	
 Check the site is working:
 
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
+	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
 [Next up: exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md)
