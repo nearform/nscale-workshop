@@ -146,7 +146,7 @@ we need to use the $DOCKER_HOST environment variable to access the VM's
 localhost.
 
 ```bash
-$ curl http://$(echo $DOCKER_HOST):1337
+$ curl http://$(boot2docker ip):1337
 ```
 Otherwise, if we're using Linux we simply request localhost:
 
