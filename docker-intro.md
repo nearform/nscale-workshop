@@ -151,7 +151,7 @@ $ curl http://$(boot2docker ip):1337
 Otherwise, if we're using Linux we simply request localhost:
 
 ```bash
-$ curl http://localhost:1337
+$ curl http://localhost:80
 ```
 
 
