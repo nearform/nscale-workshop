@@ -11,11 +11,13 @@ Go to the USB in Finder and double click on the Boot2Docker-1.2.0.pkg file.
 
 Follow the installation steps and install boot2docker.
 
-Locate the Boot2Docker app in your Applications folder and run it. Or, you can initialize Boot2Docker from the command line by running:
+Locate the Boot2Docker app in your Applications folder and run it.
+
+A terminal window will open and you'll see the virtual machine starting up.
+
+Set DOCKER_HOST env in the terminal and in your ```~/.bash_profile```:
 
 ```bash
-boot2docker init
-boot2docker start
 export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2375
 ```
 
@@ -38,6 +40,8 @@ Server API version: 1.14
 Go version (server): go1.3.1
 Git commit (server): fa7b24f
 ```
+
+You can control boot2docker with ```boot2docker stop``` and ```boot2docker start```.
 
 Load ubuntu docker images
 ---------------
