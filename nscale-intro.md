@@ -111,9 +111,7 @@ That's because there are as yet no systems defined.
 
 ### Clone a system
 
-Let's clone an example 'hello world' system. There is one already prepared at:
-
-	git@github.com:nearform/nscaledemo.git
+Let's clone an example 'hello world' system. There is one already prepared at ```git@github.com:nearform/nscaledemo.git```.
 
 Create a clean working folder on your machine and cd into it.
 
@@ -162,7 +160,7 @@ Let's now build the example web container by running the following:
 
 	nsd container build nscaledemo web
 
-`nscale` will build the `nscaledemo` web container so that it's ready to be deployed. 
+`nscale` will build the `nscaledemo` web container so that it's ready to be deployed. This will take a few mins so for the curious, open a new terminal window and execute ```nsd server logs```.
 
 Once the command completes we can check the revision history:
 
