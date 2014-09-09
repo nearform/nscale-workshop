@@ -1,19 +1,19 @@
 A Larger Application
 =======================
 
-This tutorial teaches you:
+This tutorial covers:
 
-1. How to deploy a larger application
-2. Run a preview before deploying
-2. nscale web gui
+1. Deploying a larger application
+2. Previewing before deploying
+2. The nscale web gui
 
 Clone the Application
 ---------------------
-Lets get started by cloning the repository for a larger application. Run the following command:
+Lets get started by cloning the repository for a larger application by running the following:
 
 	nsd system clone git@github.com:nearform/sudclocal.git
 
-This will pull down the code for the Startup Death Clock. Lets take a look at the system definition:
+This will pull down the code for the Startup Death Clock system. Let's take a look at the system definition:
 
 	nsd container list sudc
 	
@@ -24,48 +24,48 @@ You should see the following containers:
 	real-srv             boot2docker     
 	doc-srv              boot2docker
 
-The application is composed of a web front end and three addtional services.
+The application is composed of a web front end and three additional services.
 
 Build the system
 ----------------
-Lets go ahead and build the containers ready for deployment, run the following:
+Let's go ahead and build the containers ready for deployment:
 
 	nsd container build sudc hist-srv
 	nsd container build sudc real-srv
 	nsd container build sudc doc-srv
 	nsd container build sudc web
 
-After those have all completed you should have four containers ready for deployment.
+After those have all completed we should have four containers ready for deployment.
 
 GUI
 ---
-Lets now take a look at the startup death clock system using the graphical interface. Point your browser to <a href="http://localhost:9000" target="_blank">http://localhost:9000</a>.
+Now we can take a look at the startup death clock system using the graphical interface. We just need to point our browser to <a href="http://localhost:9000" target="_blank">http://localhost:9000</a>.
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/systems.png)
 
-Click on the sudclocal link to go to the container view.
+We can go to the container view via the sudclocal link,
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/containers.png)
 
-Show the revision list by clicking on the Revisions tab.
+show the revision list by clicking on the Revisions tab,
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/revisions.png)
 
-Show the system state by clicking on the System state tab.
+show the system state by clicking on the System state tab,
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/topology.png)
 
-Show the timeline by clicking on the System timeline tab.
+and show the timeline by clicking on the System timeline tab.
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/timeline.png)
 	
 Previewing the deployment
 -------------------------
-Before we deploy the system lets take a look at the commands that will be executed on deployment. Fist off check the revision list:
+Before we deploy the system let's take a look at the commands that will be executed on deployment. Fist we can check the revision list:
 
 	nsd revision list sudc
 
-You should see some output similar to the following:
+We should see some output similar to the following:
 
 	revision             deployed who                                                     time                      description                                       
 	136c840f016c57d0e23… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:10:11.000Z  built container: 2b36df5faa5c92262aa675cd0a07312a…
@@ -76,11 +76,11 @@ You should see some output similar to the following:
 	3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition                           
 	644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
 
-Next lets preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
+Next let's preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
 
 	nsd revision preview sudc <revision id>
 
-You should see some output similar to the following:
+We should see some output similar to the following:
 
 	execution plan: 
 	Command                        Id                                                
@@ -98,18 +98,21 @@ You should see some output similar to the following:
 	localhost            docker images --no-trunc| grep none | awk '{print $3}' | xargs -I {} docker rmi {}                                                                    
 	localhost            docker run -e WEB_HOST=10.75.29.243 -p 8000:8000 -d sudc/web-223 sh /web/run.sh
 
-to produce this view nscale has computed a delta between what the latest revisions of the system should look like compared with what is actually running on your system. 
+In order to produce this view, `nscale` has computed a delta between what the latest revisions of the system should look like compared with what is actually running on your system. 
 
 Run the deployment
 ------------------
-Lets go ahead and run the deployment:
+Let's go ahead and run the deployment:
 
 	nsd revision deploy sudc <revision id>
 
-nscale will now execute the deployment that we previewed in the last step. Once this completes you should have a running system composed of four docker containers. To check that all is working point your browser to the docker host ip address port 8000. You should see the running startup death clock:
+`nscale` will now execute the deployment that we previewed in the last step. Once this completes we should have a running system composed of four docker containers. We van verify everything's working by pointing our browser to the docker host ip address port 8000 on Mac OS X or localhost on linux. 
 
-	echo $DOCKER_HOST
-	open http://<ip>:8000
+OS X:
+	open http://$($DOCKER_HOST):8000
+
+Linux 
+	open http://localhost:8000
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/sudc.png)
 
