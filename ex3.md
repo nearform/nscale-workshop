@@ -109,7 +109,7 @@ Let's go ahead and run the deployment:
 `nscale` will now execute the deployment that we previewed in the last step. Once this completes we should have a running system composed of four docker containers. We van verify everything's working by pointing our browser to the docker host ip address port 8000 on Mac OS X or localhost on linux. 
 
 OS X:
-	open http://$($DOCKER_HOST):8000
+	open http://$(boot2docker ip):8000
 
 Linux 
 	open http://localhost:8000
