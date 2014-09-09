@@ -181,8 +181,11 @@ giving the revision id from the top of the revision list.
 
 We should see that there is one running container. We can futher verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`. 
 
-	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
-	open http://localhost:8000 # linux
+	# Mac OSX
+	open http://$(boot2docker ip):8000
+	
+	# Linux
+	open http://localhost:8000
 
 The page should load and display 'Hello world!'.
 
