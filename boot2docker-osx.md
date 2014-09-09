@@ -49,7 +49,7 @@ Load ubuntu docker images
 Copy ubuntu_docker_images.tar from the USB into /tmp folder.
 
 ```bash
-cp /Volumes/<usb>/ubuntu_docker_images.tar /tmp/
+cp /Volumes/NO\ NAME/ubuntu_docker_images.tar /tmp/
 ```
 
 Load the ubuntu docker images into docker (this will take a few mins):
