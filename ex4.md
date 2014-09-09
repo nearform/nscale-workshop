@@ -57,11 +57,10 @@ The web section defines the following:
 	  "apibase": "/api/1.0"
 	}
 
+Note that the web and api sections are optional, by omitting these from the configuration nscale will not start a GUI.
+
 The modules section defines the following:
 
-	protocol - server side command protocol
-	authorization - nscale auth module
-	analysis - nscale analyzer module
 	
 	"modules": {
 	  "protocol": {
@@ -79,10 +78,14 @@ The modules section defines the following:
 	    "specific": {}
 	  }
 	}
-	
+
+Right now we the auth module just picks up your git credentials, however this is open for extension with and can be replaced with other authentication stratageys.
+
+The analysis module implimenets the logic that queries a running system for comparison against the desired system state. Right now nscale has a local boot2docker analyzer and also and Amazon web services analyzer.
+
 The containers section defines the following:
 
-	containers - list of supported containers
+	containers - list of supported container types.
 
 	"containers": [
 	  {"require": "virtualbox-container",
@@ -94,6 +97,8 @@ The containers section defines the following:
 	    "specific": {"imageCachePath": "/tmp"}
 	  }
 	]
+
+For this workshop we are using just the virtualbox and boot2docker containers. Nscale also has additional containers for AWS deployment. The intent is that this provides an open framework for extnesion into other platforms.
 
 The `nscale` root folder looks as follows:
 

@@ -82,4 +82,3 @@ And check `sudc` is working as expected again:
 	open http://$(echo $DOCKER_HOST):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
-[Next up: exercise 7](https://github.com/nearform/nscale-workshop/blob/master/ex7.md)

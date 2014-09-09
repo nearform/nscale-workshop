@@ -1,14 +1,14 @@
 Rollback
 ========
 
-This tutorial cocers:
+This tutorial covers:
 
 1. Rolling a deployed system back to a known good state
 2. Rolling a deployed system forward after applying a full fix
 
 Add a buggy alert
 ------------
-Let's break stuff, by opening `~/.nscale/data/build/sudc/startupdeathclock/web/public/js/app.js` and adding an alert after the 'Your code here' comment:
+Let's break something! Open up `~/.nscale/data/build/sudc/startupdeathclock/web/public/js/app.js` and addan alert after the 'Your code here' comment:
 
 	...
         initialize: function () {
