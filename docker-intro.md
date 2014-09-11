@@ -133,7 +133,7 @@ Successfully built <containerid>
 Next we run our container with:
 
 ```bash
-docker run -p 80:1337 <containerid>
+docker run -p 1337:1337 <containerid>
 ```
 (copy paste the container id from the previous command)
 
