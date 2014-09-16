@@ -209,12 +209,12 @@ Our container should be running just fine, we can use the following to see it in
 
 OS X : 
 ```bash
-$ curl http://$(boot2docker ip):8000
+$ curl http://$(boot2docker ip):1337
 ```
 
 Linux:
 ```bash
-$ curl http://localhost:8000
+$ curl http://localhost:1337
 ```
 
 [Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
