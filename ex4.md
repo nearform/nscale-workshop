@@ -44,12 +44,12 @@ The api section defines the following:
 	    ...
 	  }
 	}
-	
+
 The web section defines the following:
 
 	ip and port - the ip and port the nscale web gui should run on
 	apiserver and apibase - the host, port and base where the nscale api is running on
-	
+
 	"web": {
 	  "ip": "0.0.0.0",
 	  "port": 9000,
@@ -61,7 +61,7 @@ Note that the web and api sections are optional, by omitting these from the conf
 
 The modules section defines the following:
 
-	
+
 	"modules": {
 	  "protocol": {
 	    "require": "nscale-protocol",
@@ -74,7 +74,7 @@ The modules section defines the following:
 	    }
 	  },
 	  "analysis": {
-	    "require": "nscale-boot2docker-analyzer",
+	    "require": "nscale-local-analyzer",
 	    "specific": {}
 	  }
 	}
@@ -88,12 +88,12 @@ The containers section defines the following:
 	containers - list of supported container types.
 
 	"containers": [
-	  {"require": "virtualbox-container",
-	    "type": "virtualbox",
+	  {"require": "blank-container",
+	    "type": "blank-container",
 	    "specific": {}
 	  },
-	  {"require": "boot2docker-container",
-	    "type": "boot2docker",
+	  {"require": "docker-container",
+	    "type": "docker",
 	    "specific": {"imageCachePath": "/tmp"}
 	  }
 	]
@@ -106,7 +106,7 @@ The `nscale` root folder looks as follows:
 
 Viewing the logs
 ----------------
-We can view the nscale logs at any time by running 
+We can view the nscale logs at any time by running
 
 	nsd server logs
 	nsd server logs api.log
@@ -118,7 +118,7 @@ There is a problem with our Startup Death Clock application. The home page reads
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/click.png)
 
-We need to get this fixed and deployed right away. Let's go ahead and make the fix. Let's replace 'Click' with 'Clock': 
+We need to get this fixed and deployed right away. Let's go ahead and make the fix. Let's replace 'Click' with 'Clock':
 
 	sed -i .bak -e s/Click/Clock/g -e s/click/clock/g ~/.nscale/data/build/sudc/startupdeathclock/web/public/templates/index.dust
 	(cd ~/.nscale/data/build/sudc/startupdeathclock && git diff)
@@ -126,13 +126,13 @@ We need to get this fixed and deployed right away. Let's go ahead and make the f
 And run the following commands:
 
 	nsd container build sudc web
-	
+
 	nsd revision list sudc
-	
+
 	nsd revision preview sudc <revision id>
-	
+
 	nsd revision deploy sudc <revision id>
-	
+
 	echo $DOCKER_HOST
 	open http://<ip>:8000
 

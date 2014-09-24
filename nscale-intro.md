@@ -17,10 +17,10 @@ What is nscale?
 ### Prerequisites
 
 #### Docker
-We should have docker installed on our system as per the previous exercise. 
+We should have docker installed on our system as per the previous exercise.
 
 #### Git
-`nscale` uses git to track revision history so we will need git installed on our system. We need to configure our `git` username and email for `nscale` to track revisions correctly. 
+`nscale` uses git to track revision history so we will need git installed on our system. We need to configure our `git` username and email for `nscale` to track revisions correctly.
 
 Let's do the following:
 
@@ -32,12 +32,6 @@ Set git email
 
 	git config --global user.email "you@somewhere.com"
 
-
-### local linux setup
-If you are following along on liux you will need to change permissions on the local docker socket. for exmpple if you are logged in as the user ubuntu you should run the following command
-
-sudo chown -R ubuntu:ubuntu /var/run/docker.sock
-
 ### Installation
 `nscale` is installed though `npm`. To install it, we run the following:
 
@@ -46,7 +40,7 @@ sudo chown -R ubuntu:ubuntu /var/run/docker.sock
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
 	nsd help
-	
+
 We should see output similar to the following:
 
 	-[ server ]----------
@@ -71,38 +65,43 @@ We should see output similar to the following:
                                         output the results
 	system check <sys>                    - run an analysis and check it against the
                                         expected deployed system configuration
- 
+
 
 ### Run the server
 
-`nscale` runs as a server with a command line client and web interface. 
-To start the server we run:
+`nscale` runs as a server with a command line client and web interface.
 
-	nsd server start
+To start the server on Linux we run:
+
+	nsd server start --sudo # sudo is needed to access docker
+
+To start the server on Mac we run:
+
+  nsd server start # or on linux if DOCKER_HOST is configured properly
 
 To stop the server we run:
 
-	nsd server stop
+	nsd server stop # pass --sudo if you used sudo in the previous step
 
 ### Setting credentials
 We need to tell `nscale` who you are:
 
 	nsd login
-	
+
 `nscale` will read our git credentials and use them for making system commits as we build and deploy containers.
 
 ### List available systems
 `nscale` utilizes the concept of a system, which is a collection of containers (containers being Docker containers, virtual machines, physical machines or anything that can hold
 our microservices) arranged according a topological deployment strategy.
 
-A system is defined by a system definition file and holds all of the meta information required to build and deploy system containers. 
+A system is defined by a system definition file and holds all of the meta information required to build and deploy system containers.
 
-Let's check that the `system list` command works. 
+Let's check that the `system list` command works.
 
 With the `nsd server` running, let's execute the following command:
 
 	nsd system list
-	
+
 We should see the following output
 
 	Name                           Id
@@ -131,6 +130,10 @@ We should see the following output:
 	Name                           Id
 	nscaledemo                     e1144711-47bb-5931-9117-94f01dd20f6f
 
+Then enter the nscaldemo folder:
+
+  cd nscaledemo
+
 ### Under the hood
 `nscale` uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Let's take a moment to inspect the configuration.
 
@@ -141,6 +144,11 @@ If we take a look in the nscaledemo repository we should see a file named `syste
 ### Inspect the demo system
 Let's inspect the `nscaledemo` system:
 
+	nsd container list
+
+If you are running the command outside of the nscaledemo folder, you
+need to:
+
 	nsd container list nscaledemo
 
 We should see the following output:
@@ -148,42 +156,46 @@ We should see the following output:
 	Name                 Type            Id                                                 	Version         Dependencies
 	Machine              virtualbox      85d99b2c-06d0-5485-9501-4d4ed429799c                               ""
 	web                  boot2docker     9ddc6c027-9ce2-5fdg-9936-696d2b3789bb              0.0.1           {}
-	
+
 There are two containers definitions, a virtual box host and a boot2docker container. Let's take a look at the revision history:
 
-	nsd revision list nscaledemo
+	nsd revision list
 
-We should see a list of system revisions.
+We should see a list of system revisions for the current system.
 
 ### Building a container
 Let's now build the example web container by running the following:
 
-	nsd container build nscaledemo web
+	nsd container build web
 
 `nscale` will build the `nscaledemo` web container so that it's ready to be deployed. This will take a few mins so for the curious, open a new terminal window and execute ```nsd server logs```.
 
 Once the command completes we can check the revision history:
 
-	nsd revision list nscaledemo
+	nsd revision list
 
 We should see an updated commit, that is, a new immutable system revision that includes the freshly built container.
 
 ### Deploying the container
 Let's deploy the container that we just built, run:
 
-	nsd revision deploy nscale <revisionid>
+	nsd revision deploy <systemid> <revisionid>
 
-giving the revision id from the top of the revision list. 
+giving the revision id from the top of the revision list. You can also
+abbreviate any command word down to 3 chars, and omit the system id if
+you are in the system directory, like so:
+
+  nsd rev dep <revisionid>
 
 `nscale` will now deploy the container. We can check that the deploy went as planned using Docker like so:
 
 	docker ps
 
-We should see that there is one running container. We can futher verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`. 
+We should see that there is one running container. We can futher verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
 
 	# Mac OSX
 	open http://$(boot2docker ip):8000
-	
+
 	# Linux
 	open http://localhost:8000
 
