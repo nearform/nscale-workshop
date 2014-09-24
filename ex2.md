@@ -58,6 +58,11 @@ out the repo and build the containers for us.
 
 Let's take the example we built in [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and place it in a git repository on github.
 
+
+In this tutorial, our test repo will be: git@github.com:nearform/nscale-workshop-intro-docker-sample.git
+
+### Custom build directory
+
 We'll also include an `bash` script in our new repo, that can customize
 how the container will be built. In our case, this is really simple:
 
@@ -67,16 +72,17 @@ how the container will be built. In our case, this is really simple:
 echo TARGET:.
 ```
 
-We'll name this `build.sh`
+We'll name this `build.sh`, this file tells nscale where the
+Dockerfile is located, plus it can be used to do some steps locally to
+prepare the build.
 
-Now we can build multiple containers from the same git repository.
-
-In this tutorial, our test repo will be: git@github.com:nearform/nscale-workshop-intro-docker-sample.git
+Thanks to this file, we can build multiple containers from the same git repository.
 
 Add a container definition
 --------------------------
 
-Let's open `system.json` in you favorite editor. It looks like this:
+Let's open `system.json` in you favorite editor (you might need to edit
+it with sudo if you are on Linux). It currently looks like this:
 
 ```js
 {
@@ -99,7 +105,7 @@ To begin creating a system, we need to add the container definitions:
   "containerDefinitions": [
     {
       "name": "Machine",
-      "type": "virtualbox",
+      "type": "blank-container",
       "specific": {
         "repositoryToken": "04551b154404a852e663aba4c3fa299e04f6e8a5"
       },
@@ -107,7 +113,7 @@ To begin creating a system, we need to add the container definitions:
     },
     {
       "name": "web",
-      "type": "boot2docker",
+      "type": "docker",
       "dependencies": {},
       "specific": {
         "repositoryUrl": "git@github.com:nearform/nscale-workshop-intro-docker-sample.git",
