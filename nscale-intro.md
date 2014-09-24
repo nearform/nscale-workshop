@@ -73,15 +73,15 @@ We should see output similar to the following:
 
 To start the server on Linux we run:
 
-	sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK nsd server start
+	nsd server start --sudo # sudo is needed to access docker
 
 To start the server on Mac we run:
 
-  nsd server start
+  nsd server start # or on linux if DOCKER_HOST is configured properly
 
 To stop the server we run:
 
-	sudo nsd server stop
+	nsd server stop # pass --sudo if you used sudo in the previous step
 
 ### Setting credentials
 We need to tell `nscale` who you are:
