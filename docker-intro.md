@@ -14,8 +14,8 @@ What is Docker?
 ![Docker](https://d3oypxn00j2a10.cloudfront.net/0.9.0/images/pages/brand_guidelines/small_v.png)
 
 Docker is an awesome tool we can use to deploy production systems. It allows us to isolate
-our code in completely clean system environments. The `Dockerfile` is a sort of installtion
-'recipe' that can be used to initialize a system enviornment. A Docker container is a 
+our code in completely clean system environments. The `Dockerfile` is a sort of installation
+'recipe' that can be used to initialize a system environment. A Docker container is a 
 fresh Linux environment that bootstraps from a host systems Linux kernel - this gives us a lot
 of the benefits of the VM but without the slow execution and bulk often associated with
 VMs.
@@ -51,7 +51,7 @@ $ docker run -it --rm dockerfile/nodejs node
 
 This command pulls in the `nodejs` from `dockerfile.github.io`,
 tells Docker to open an interactive terminal into the
-continer and runs the `node` executable, thus giving us the 
+container and runs the `node` executable, thus giving us the 
 Node REPL.
 
 
@@ -60,7 +60,7 @@ Our static website on Docker
 
 ### Project Setup
 
-First let's create a new directory and intialize a new git repo
+First let's create a new directory and initialize a new git repo
 inside it:
 
 ```bash
