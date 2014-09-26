@@ -35,7 +35,7 @@ Set git email
 ### Installation
 `nscale` is installed though `npm`. To install it, we run the following:
 
-	sudo npm install -g nscale
+	npm install -g nscale # run with sudo if needed
 
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
