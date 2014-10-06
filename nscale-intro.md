@@ -37,6 +37,12 @@ Set git email
 
 	npm install -g nscale # run with sudo if needed
 
+If you are running on Linux, you should also add yourself to the docker
+group, so that nscale can run docker commands without root permissions.
+You can do that with:
+
+  sudo usermod -G docker -a `whoami`
+
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
 	nsd help
@@ -71,17 +77,13 @@ We should see output similar to the following:
 
 `nscale` runs as a server with a command line client and web interface.
 
-To start the server on Linux we run:
+To start the server we run:
 
-	nsd server start --sudo # sudo is needed to access docker
-
-To start the server on Mac we run:
-
-  nsd server start # or on linux if DOCKER_HOST is configured properly
+  nsd server start
 
 To stop the server we run:
 
-	nsd server stop # pass --sudo if you used sudo in the previous step
+	nsd server stop
 
 ### Setting credentials
 We need to tell `nscale` who you are:
