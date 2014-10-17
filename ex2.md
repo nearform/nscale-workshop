@@ -32,7 +32,8 @@ Now we can check that everything is as expected:
 ```bash
 $ nsd sys list
 Name                           Id
-workshop                       521a3a73-7d5d-434d-96c5-e4732db307be
+aaa                            e30f6343-1f1a-45fa-a0af-80b2e9383155
+workshop                       2de30af9-fdc4-41ff-9b88-cd47eacb7f77
 ```
 
 (In `nscale`, you can shorten commands down to 3 chars.)
@@ -43,12 +44,33 @@ including our new `nscale_workshop` system:
 The `nsd sys create` creates a new git repository in the current
 directory. Go ahead and have a look at the files in there.
 
+```
+$ cd workshop
+$ tree # you may not have tree installed
+.
+├── definitions
+│   └── services.js
+├── deployed.json
+├── map.js
+├── system.js
+├── system.json
+└── timeline.json
+```
+
+1 directory, 6 files
+
 There are three files:
 
-1. `deployed.json` contains the currently deployed system.
-2. `system.json` contains the system definition, all the containers and
-   how to build them.
-3. `timeline.json` contains all the events that happened in the system.
+1. `system.js` is the _source of knowledge_ of a system managed by
+   nscale. We will edit this shortly.
+2. `definitions/services.js` contains the definitions on how to build
+   our containers. We will edit this shortly.
+3. `deployed.json` contains the currently deployed system, you should
+   not edit this file directly.
+4. `system.json` contains the system definition, all the containers and
+   how to build them, you should not edit this file directly.
+5. `timeline.json` contains all the events that happened in the system,
+    yoyu should not edit this file directy.
 
 Preparing the Application
 -------------------------
@@ -58,130 +80,94 @@ out the repo and build the containers for us.
 
 Let's take the example we built in [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and place it in a git repository on github.
 
-
 In this tutorial, our test repo will be: git@github.com:nearform/nscale-workshop-intro-docker-sample.git
-
-### Custom build directory
-
-We'll also include an `bash` script in our new repo, that can customize
-how the container will be built. In our case, this is really simple:
-
-```bash
-#!/bin/bash
-
-echo TARGET:.
-```
-
-We'll name this `build.sh`, this file tells nscale where the
-Dockerfile is located, plus it can be used to do some steps locally to
-prepare the build.
-
-Thanks to this file, we can build multiple containers from the same git repository.
 
 Add a container definition
 --------------------------
 
-Let's open `system.json` in you favorite editor (you might need to edit
-it with sudo if you are on Linux). It currently looks like this:
+Let's open `definitions/services.js` in you favorite editor. It
+currently looks like:
 
 ```js
-{
-  "name": "workshop",
-  "namespace": "nscale",
-  "id": "521a3a73-7d5d-434d-96c5-e4732db307be",
-  "containerDefinitions": [
-  ],
-  "topology": {
-    "containers": {}
-  }
-}
+exports.root = {
+  type: 'container'
+};
+
+// add here more definitions
 ```
 
-To begin creating a system, we need to add the container definitions:
+To begin defininig our system, we need to change it to:
 
 ```js
-{
-  // the other stuff
-  "containerDefinitions": [
-    {
-      "name": "Machine",
-      "type": "blank-container",
-      "specific": {
-        "repositoryToken": "04551b154404a852e663aba4c3fa299e04f6e8a5"
-      },
-      "id": "85d99b2c-06d0-5485-9501-4d4ed429799c"
-    },
-    {
-      "name": "web",
-      "type": "docker",
-      "dependencies": {},
-      "specific": {
-        "repositoryUrl": "git@github.com:nearform/nscale-workshop-intro-docker-sample.git",
-        "buildScript": "build.sh",
-        "arguments": "-p 1337:1337 -d __TARGETNAME__"
-      },
-      "id": "9ddc6c027-9ce2-5fdg-9936-696d2b3789bb",
-      "version": "0.0.1"
+exports.root = {
+  type: 'container'
+};
+
+exports.web = {
+  type: 'process',
+  specific: {
+    repositoryUrl: 'git@github.com:nearform/nscale-workshop-intro-docker-sample.git',
+    execute: {
+      args: '-p 1337:1337 -d',
     }
-  ]
-  // other stuff
-}
+  }
+};
 ```
 
 Build a container
 -----------------
 
-In order to build a container, we need to initialize our topology
-section:
+Let's open `system.js` in you favorite editor. It currently looks like this:
 
 ```js
-{
-  // other stuff
-  "topology": {
-    "containers": {
-      "10": {
-        "id": "10",
-        "containerDefinitionId": "85d99b2c-06d0-5485-9501-4d4ed429799c",
-        "containedBy": "10",
-        "contains": [
-          "8bd49b5b-3bd9-4314-8895-a2ec26e28175"
-        ],
-        "specific": {
-          "ipaddress": "localhost"
-        }
-      },
-      "8bd49b5b-3bd9-4314-8895-a2ec26e28175": {
-        "id": "8bd49b5b-3bd9-4314-8895-a2ec26e28175",
-        "containerDefinitionId": "9ddc6c027-9ce2-5fdg-9936-696d2b3789bb",
-        "containedBy": "10",
-        "contains": [],
-        "specific": {
-          "dockerLocalTag": "nfddemo/web-1",
-          "version": "0.0.1"
-        }
-      }
-    }
+exports.name = 'workshop';
+exports.namespace = 'nscale';
+exports.id = '2de30af9-fdc4-41ff-9b88-cd47eacb7f77';
+
+exports.topology = {
+  local: {
+  }
+};
+```
+
+This system is empty, let's add our containers:
+
+```js
+exports.name = 'workshop';
+exports.namespace = 'nscale';
+exports.id = '2de30af9-fdc4-41ff-9b88-cd47eacb7f77';
+
+exports.topology = {
+  local: {
+    root: ['web']
+  }
+};
+```
+
+In order for everything to work fine, we need to update one more file, `map.js`, to, to, to, to:
+
+```js
+exports.types = {
+  local: {
+  }
+}
+
+exports.ids = {
+  local: {
+    root: { id: '10' },
+    web: { name: 'web' }
   }
 }
 ```
 
-Finally for nscale to be aware of our new containers, we create a new
-git commit in the system git repo. 
+This file helps with the matching between the _symbolic names_ used in
+the definitions and the analysis run by the nscale.
 
-```bash
-$ git commit -a -m 'new containers'
-```
+This abstract system definition __must__ be compiled into the
+`system.json`. In order to do so, run
 
-Let's check if nscale detected the changes:
-
-```bash
-$ nsd rev list workshop
-revision             deployed who                                                     time                      description
-6cd3208029943c209a5… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:03:06.000Z  Updated container definition.
-f398e76c26114173a18… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T21:45:22.000Z  first commit
-revision             deployed who                                                     time                      description
-6cd3208029943c209a5… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:03:06.000Z  Updated container definition.
-f398e76c26114173a18… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T21:45:22.000Z  first commit
+```js
+nsd system compile workshop local
 ```
 
 Now, let's buid our containers:
@@ -195,9 +181,14 @@ We'll check the revision list again:
 ```bash
 $ nsd rev list workshop
 revision             deployed who                                                     time                      description
-8735764f9e57b9838b1… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:08:11.000Z  built container: cf28904e57b0c4b84b24d0297820e8a6…
-6cd3208029943c209a5… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T22:03:06.000Z  Updated container definition.
-f398e76c26114173a18… false    Matteo Collina <matteo.collina@gmail.com>               2014-09-08T21:45:22.000Z  first commit
+06a25df3d163818f104… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:53:23.000Z  built container: web
+5a1f0c5ba2b675ebf07… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:33:11.000Z  system compile
+475f94e42644a0b66cd… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:32:32.000Z  system compile
+23f506e70ef36e707b8… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:31:24.000Z  system compile
+f62a1f316b41e04fb75… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:57.000Z  system compile
+daed56b003f6e83502a… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:41.000Z  system compile
+b37e43f8e21b1159bd1… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:30.000Z  system compile
+940eb3f5a4b977835ba… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:20:44.000Z  first commit
 ```
 
 Deploy
@@ -206,10 +197,10 @@ Deploy
 All we have to do now is deploy:
 
 ```bash
-$ nsd rev deploy workshop 8735
+$ nsd rev deploy workshop 06a2
 ```
 
-The 8735 part is just the first chars of the revision identifier from `nsd rev list`
+The 06a2 part is just the first chars of the revision identifier from `nsd rev list`
 
 Our container should be running just fine, we can use the following to see it in action:
 
@@ -222,5 +213,25 @@ Linux:
 ```bash
 $ curl http://localhost:1337
 ```
+
+Custom build directory
+----------------------
+
+If we are building multiple services from a single GIT repository,
+We __must__ also include an `bash` script in the repository for each of the services.
+In this way we can customize how the containers will be built.
+
+Here is an example of the build script:
+```bash
+#!/bin/bash
+
+echo TARGET:<PATH-TO-THE-SERVICE-FOLDER>
+```
+
+We'll name this `build.sh`, this file will tell nscale where the
+Dockerfile is located, plus it can be used to do some steps locally to
+prepare the build.
+
+Thanks to this file, we can build multiple containers from the same git repository.
 
 [Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
