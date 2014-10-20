@@ -34,6 +34,10 @@ Build the system
 ----------------
 Let's go ahead and build the containers ready for deployment:
 
+  nsd container builadll sudc
+
+Alternatively, you can build all the containers by themselves:
+
 	nsd container build sudc hist
 	nsd container build sudc real
 	nsd container build sudc doc
