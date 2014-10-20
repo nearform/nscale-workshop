@@ -11,18 +11,22 @@ Clone the Application
 ---------------------
 Lets get started by cloning the repository for a larger application by running the following:
 
-	nsd system clone git@github.com:nearform/sudclocal.git
+	nsd system clone git@github.com:nearform/sudc-system.git
 
-This will pull down the code for the Startup Death Clock system. Let's take a look at the system definition:
+This will pull down the code for the Startup Death Clock system. First of all lets compile the system:
+
+	nsd system compile sudc local
+
+Now let's take a look at the system definition:
 
 	nsd container list sudc
 
 You should see the following containers:
 
 	web                  docker
-	hist-srv             docker
-	real-srv             docker
-	doc-srv              docker
+	hist                 docker
+	real                 docker
+	doc                  docker
 
 The application is composed of a web front end and three additional services.
 
@@ -30,9 +34,9 @@ Build the system
 ----------------
 Let's go ahead and build the containers ready for deployment:
 
-	nsd container build sudc hist-srv
-	nsd container build sudc real-srv
-	nsd container build sudc doc-srv
+	nsd container build sudc hist
+	nsd container build sudc real
+	nsd container build sudc doc
 	nsd container build sudc web
 
 After those have all completed we should have four containers ready for deployment.

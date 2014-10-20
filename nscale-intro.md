@@ -141,10 +141,56 @@ Then enter the nscaldemo folder:
 
 We should see from the configuration that nscale keeps its data in ~/.nscale/data.
 
-If we take a look in the nscaledemo repository we should see a file named `system.json`. Let's open this file and inspect the contents. The `system.json` file holds the configuration for the `nscaledemo` system, defining the containers that it should build and deploy.
+Now lets look at the nscaledemo repository. It containes the following files:
+
+	├── README.md 
+	├── definitions
+	│   └── services.js
+	├── deployed.json
+	├── map.js
+	├── system.js
+	├── system.json
+	└── timeline.json
+
+#### definitions/services.js
+services.js contains some javascript that defines the two containers. 
+
+	exports.root = {
+  		type: 'container'
+	};
+
+	exports.web = {
+	  type: 'process',
+	  specific: {
+	    repositoryUrl: 'git@github.com:nearform/nscaledemoweb.git',
+	    execute: {
+	      args: '-p 8000:8000 -d',
+	      exec: '/usr/bin/node index.js'
+	    }
+	  }
+	};
+
+#### system.js
+system.js holds the system topology and identitify information.
+
+	exports.name = 'nscaledemo';
+	exports.namespace = 'nscaledemo';
+	exports.id = 'e1144711-47bb-5931-9117-94f01dd20f6f';
+
+	exports.topology = {
+	  local: {
+	    root: ['web']
+	  }
+	};
+
+nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in system.json. Lets run a compile now:
+
+	nsd system compile nscaledemo local
+
+This will run a compile of nscaledemo to the local target. Lets go ahead and take a look at the contents of system.json.
 
 ### Inspect the demo system
-Let's inspect the `nscaledemo` system:
+Now that we have run a compile, let's use nscale to inspect the `nscaledemo` system:
 
 	nsd container list
 
@@ -153,17 +199,18 @@ need to:
 
 	nsd container list nscaledemo
 
-We should see the following output:
+We should see output similar to the following:
 
-	Name                 Type            Id                                                 	Version         Dependencies
-	Machine              virtualbox      85d99b2c-06d0-5485-9501-4d4ed429799c                               ""
-	web                  boot2docker     9ddc6c027-9ce2-5fdg-9936-696d2b3789bb              0.0.1           {}
+	Name                 Type            Id                                                 
+	Machine              blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c                               
+	web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb             
 
-There are two containers definitions, a virtual box host and a boot2docker container. Let's take a look at the revision history:
+There are two containers definitions, blank root container and a docker container. Let's take a look at the revision history:
 
 	nsd revision list
 
 We should see a list of system revisions for the current system.
+
 
 ### Building a container
 Let's now build the example web container by running the following:
