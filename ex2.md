@@ -32,7 +32,6 @@ Now we can check that everything is as expected:
 ```bash
 $ nsd sys list
 Name                           Id
-aaa                            e30f6343-1f1a-45fa-a0af-80b2e9383155
 workshop                       2de30af9-fdc4-41ff-9b88-cd47eacb7f77
 ```
 
