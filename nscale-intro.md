@@ -79,7 +79,9 @@ We should see output similar to the following:
 
 To start the server we run:
 
-  nsd server start
+```sh
+nsd server start
+```
 
 To stop the server we run:
 
