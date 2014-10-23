@@ -136,7 +136,9 @@ We should see the following output:
 
 Then enter the nscaldemo folder:
 
-  cd nscaledemo
+```sh
+cd nscaledemo
+```
 
 ### Under the hood
 `nscale` uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Let's take a moment to inspect the configuration.
