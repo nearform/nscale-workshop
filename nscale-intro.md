@@ -45,6 +45,9 @@ You can do that with:
 sudo usermod -G docker -a `whoami`
 ```
 
+Bbeware that __not specifying the `-a` flag will remove you from all the
+other groups__.
+
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
 	nsd help
