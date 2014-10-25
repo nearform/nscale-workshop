@@ -41,7 +41,9 @@ If you are running on Linux, you should also add yourself to the docker
 group, so that nscale can run docker commands without root permissions.
 You can do that with:
 
-  sudo usermod -G docker -a `whoami`
+```bash
+sudo usermod -G docker -a `whoami`
+```
 
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
