@@ -9,3 +9,4 @@ nscale-workshop
   3. [Exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md) - Fixing a bug
   4. [Exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md) - Rollback
   5. [Exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md) - Automatic system fix
+  6. [Exercise 7](https://github.com/nearform/nscale-workshop/blob/master/ex7.md) - Using an image from Docker Hub
