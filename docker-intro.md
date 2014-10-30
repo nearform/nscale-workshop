@@ -106,12 +106,8 @@ To get started we need a recipe list: the `Dockerfile`:
 #
 # VERSION 0.0.1
 
-FROM dockerfile/nodejs
+FROM node
 MAINTAINER Spongebob
-
-# install tools for building binary addons
-RUN apt-get -y update
-RUN apt-get -y install build-essential libssl-dev curl python
 
 ADD ./ /src
 
