@@ -8,7 +8,7 @@ This tutorial covers:
 
 Add a buggy alert
 ------------
-Let's break something! Open up `~/.nscale/data/build/sudc/startupdeathclock/web/public/js/app.js` and addan alert after the 'Your code here' comment:
+Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app.js` and addan alert after the 'Your code here' comment:
 
 	...
         initialize: function () {
@@ -49,7 +49,7 @@ The site is back up and running so let's fix the bug in the code and apply that 
 
 Start by removing the buggy alert from the code:
 
-	(cd ~/.nscale/data/build/sudc/startupdeathclock && git checkout web/public/js/app.js)
+	(cd sudc-system/workspace/sudc-web && git checkout web/public/js/app.js)
 
 Roll forward the change:
 

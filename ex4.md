@@ -120,8 +120,8 @@ There is a problem with our Startup Death Clock application. The home page reads
 
 We need to get this fixed and deployed right away. Let's go ahead and make the fix. Let's replace 'Click' with 'Clock':
 
-	sed -i .bak -e s/Click/Clock/g -e s/click/clock/g ~/.nscale/data/build/sudc/startupdeathclock/web/public/templates/index.dust
-	(cd ~/.nscale/data/build/sudc/startupdeathclock && git diff)
+	sed -i .bak -e s/Click/Clock/g -e s/click/clock/g sudc-system/workspace/sudc-web/web/public/templates/index.dust
+	(cd sudc-system/workspace/sudc-web/web && git diff)
 
 And run the following commands:
 
