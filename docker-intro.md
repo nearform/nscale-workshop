@@ -46,10 +46,10 @@ that we have no containers running. Don't worry, we'll build one shortly.
 The following command will start a Node REPL inside a Docker container
 
 ```bash
-$ docker run -it --rm dockerfile/nodejs node
+$ docker run -it --rm node node
 ```
 
-This command pulls in the `nodejs` from `dockerfile.github.io`,
+This command pulls in the official `node` image from the Docker hub and
 tells Docker to open an interactive terminal into the
 container and runs the `node` executable, thus giving us the 
 Node REPL.
