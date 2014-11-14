@@ -1,0 +1,207 @@
+Direct deployment on Digital Ocean
+==================================
+
+Since version 0.9 nscale supports _any cloud provider that give SSH
+access_, plus bare-metal deployments.
+
+In this tutorial we will use [Digital Ocean](do-referral). If you do not
+have an account, signing up through that link gives you 10$ of credit, enough to run
+through this tutorial.
+
+In this tutorial we will deploy our beloved [startup death clock](sudc)
+application on a single machine, plus a nscale deployment machine.
+
+<a name="nscale-machine"></a>
+Setting up the deployment machine
+---------------------------------
+
+Create a new Droplet in DigitalOcean, and select the Docker application,
+like in the following screenshot:
+
+![image](./img/droplet-creation-screenshot.png)
+
+And SSH into that machine.
+
+(pick a location near you, for the sake of bandwidth and deployment
+speed it is important that all the machines are in the same datacenter)
+
+For this tutorial, you can use the smallest tier, but for largest
+deployments you might need larger disks.
+
+Install nscale
+------------
+
+We suggest to install node via [nvm](nvm), using:
+
+```bash
+curl https://raw.githubusercontent.com/creationix/nvm/v0.18.0/install.sh | bash
+```
+
+Then, logoff, login and run:
+
+```bash
+add-apt-repository ppa:chris-lea/node.js
+apt-get update
+apt-get install build-essential nodejs
+npm install nscale -g
+```
+
+node.js and nscale are now installed, launch it via `nsd ser start`.
+
+User configuration
+------------------
+
+You need to configure GIT to use nscale:
+
+```bash
+git config --global user.name "your name"
+git config --global user.email "you@somewhere.com"
+```
+
+System set up
+-------------
+
+```bash
+git clone git@github.com:nearform/sudc-system.git
+cd sudc-system
+nsd sys link .
+nsd sys list
+```
+
+We need to generate an ssh key with no passphrase for this project:
+
+```bash
+ssh-keygen -t rsa
+```
+
+Type no passphrase, and save it as `sudc-key`.
+
+Creating a new machine
+----------------------
+
+Open your Digital Ocean admin panel.
+
+Create a new machine like we [the previous one](#nscale-machine), but
+configure it with the newly created ssh key:
+
+![image](./img/digital-ocean-add-key.png)
+
+Note the IP address of the machine, for this tutorial is: 178.62.80.16.
+
+Test that you can access the machine from the nscale machine with:
+
+```bash
+ssh -i sudc-key 178.62.80.16
+```
+
+nscale configuration
+--------------------
+
+In order to configure the nscale analyzer to accurately detect the
+containers running on the target machine, you need to edit the
+`~/.nscale/config/config.json` file and replace:
+
+```
+{
+  ...
+  "modules": {
+    ...
+    "analysis": {
+      "require": "nscale-local-analyzer",
+      "specific": {
+      }
+    }
+  }
+  ...
+}
+```
+
+to:
+
+
+```
+{
+  ...
+  "modules": {
+    ...
+    "analysis": {
+      "require": "nscale-direct-analyzer",
+      "specific": {
+        "user": "root"
+        "identityFile": "/root/sudc-system/sudc-key"
+      }
+    }
+  }
+  ...
+}
+```
+
+(Adjust this config if you cloned sudc-system to another folder)
+
+This step will likely not be needed in a next release, more goodness is
+coming!
+
+Edit the system definition
+--------------------------
+
+Create a new file named `definitions/machines.json` in the project with content:
+
+```js
+exports.machine = {
+  type: 'container'
+};
+```
+
+Then, edit your `system.js` to the following:
+
+```js
+exports.name = 'sudc-system';
+exports.namespace = 'sudc';
+exports.id = '62999e58-66a0-4e50-a870-f2673acf6c79';
+
+exports.topology = {
+  local: {
+    root: ['doc', 'hist', 'real', 'web']
+  },
+  direct: {
+    machine$123: {
+      contains: ['doc', 'hist', 'real', 'web'],
+      specific: {
+        user: 'root',
+        identityFile: 'sudc-key',
+        ipAddress: '178.62.80.16'
+      }
+    }
+  }
+};
+```
+
+(you can specify more than one instance on the same host postponing
+`$<identifier>`)
+
+Deploying!
+----------
+
+You can build all your container with:
+
+```bash
+nsd cont buildall
+```
+
+Go grab a cup of coffee, while nscale build everything for you.
+
+Then, launch:
+
+```
+nsd rev dep head
+```
+
+To deploy the latest revision.
+
+Enjoy sudc at http://YOURIP:8000/.
+
+You can see the result of this tutorial at:
+https://github.com/nearform/sudc-system/tree/direct
+
+[sudc]: http://github.com/nearform/sudc-system
+[do-referral]: https://www.digitalocean.com/?refcode=c85081546a8e
