@@ -45,7 +45,7 @@ You can do that with:
 sudo usermod -G docker -a `whoami`
 ```
 
-Bbeware that __not specifying the `-a` flag will remove you from all the
+Beware that __not specifying the `-a` flag will remove you from all the
 other groups__.
 
 We can do a quick check to verify installation success by running the `nscale` command line client:
@@ -139,7 +139,7 @@ We should see the following output:
 	Name                           Id
 	nscaledemo                     e1144711-47bb-5931-9117-94f01dd20f6f
 
-Then enter the nscaldemo folder:
+Then enter the nscaledemo folder:
 
 ```sh
 cd nscaledemo
@@ -150,7 +150,7 @@ cd nscaledemo
 
 We should see from the configuration that nscale keeps its data in ~/.nscale/data.
 
-Now lets look at the nscaledemo repository. It containes the following files:
+Now lets look at the nscaledemo repository. It contains the following files:
 
 	├── README.md 
 	├── definitions
@@ -180,9 +180,9 @@ services.js contains some javascript that defines the two containers.
 	};
 
 #### system.js
-system.js holds the system topology and identitify information.
+system.js holds the system topology and identity information.
 
-	exports.name = 'nscaledemo';
+g	exports.name = 'nscaledemo';
 	exports.namespace = 'nscaledemo';
 	exports.id = 'e1144711-47bb-5931-9117-94f01dd20f6f';
 
@@ -249,7 +249,7 @@ you are in the system directory, like so:
 
 	docker ps
 
-We should see that there is one running container. We can futher verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
+We should see that there is one running container. We can further verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
 
 	# Mac OSX
 	open http://$(boot2docker ip):8000

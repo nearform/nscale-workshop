@@ -44,7 +44,7 @@ exports.root = {
 // add here more definitions
 ```
 
-To begin defininig our system, we need to change it to:
+To begin defining our system, we need to change it to:
 
 ```js
 exports.root = {
@@ -96,7 +96,7 @@ exports.topology = {
 nsd system compile workshop local
 ```
 
-Now, let's buid our containers:
+Now, let's build our containers:
 
 ```bash
 $ nsd container buildall
