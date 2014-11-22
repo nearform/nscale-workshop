@@ -69,7 +69,7 @@ There are three files:
 4. `system.json` contains the system definition, all the containers and
    how to build them, you should not edit this file directly.
 5. `timeline.json` contains all the events that happened in the system,
-    yoyu should not edit this file directy.
+    you should not edit this file directly.
 
 Preparing the Application
 -------------------------
@@ -95,7 +95,7 @@ exports.root = {
 // add here more definitions
 ```
 
-To begin defininig our system, we need to change it to:
+To begin defining our system, we need to change it to:
 
 ```js
 exports.root = {
@@ -143,7 +143,7 @@ exports.topology = {
 };
 ```
 
-In order for everything to work fine, we need to update one more file, `map.js`, to, to, to, to:
+In order for everything to work fine, we need to update one more file, `map.js`, to:
 
 ```js
 exports.types = {
@@ -169,7 +169,7 @@ This abstract system definition __must__ be compiled into the
 nsd system compile workshop local
 ```
 
-Now, let's buid our containers:
+Now, let's build our containers:
 
 ```bash
 $ nsd container build workshop web
@@ -217,7 +217,7 @@ Custom build directory
 ----------------------
 
 If we are building multiple services from a single GIT repository,
-We __must__ also include an `bash` script in the repository for each of the services.
+We __must__ also include a `bash` script in the repository for each of the services.
 In this way we can customize how the containers will be built.
 
 Here is an example of the build script:

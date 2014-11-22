@@ -9,7 +9,7 @@ This tutorial covers:
 
 Configuration
 -------------
-Before we proceed let's just take a look at the `nscale` configuration file. By default this is placed in ~/.nscale/config/config.json. When we open this file up and inspect it we'll see a JSON file containing several sections that control various aspects of `nscale`.
+Before we proceed let's just take a look at the `nscale` configuration file. By default this is placed in `~/.nscale/config/config.json`. When we open this file up and inspect it we'll see a JSON file containing several sections that control various aspects of `nscale`.
 
 The kernel section defines the following:
 
@@ -79,9 +79,9 @@ The modules section defines the following:
 	  }
 	}
 
-Right now we the auth module just picks up your git credentials, however this is open for extension with and can be replaced with other authentication stratageys.
+Right now we the auth module just picks up your git credentials, however this is open for extension with and can be replaced with other authentication strategies.
 
-The analysis module implimenets the logic that queries a running system for comparison against the desired system state. Right now nscale has a local boot2docker analyzer and also and Amazon web services analyzer.
+The analysis module implements the logic that queries a running system for comparison against the desired system state. Right now nscale has a local boot2docker analyzer and also and Amazon web services analyzer.
 
 The containers section defines the following:
 
@@ -98,7 +98,7 @@ The containers section defines the following:
 	  }
 	]
 
-For this workshop we are using just the virtualbox and boot2docker containers. Nscale also has additional containers for AWS deployment. The intent is that this provides an open framework for extnesion into other platforms.
+For this workshop we are using just the virtualbox and boot2docker containers. Nscale also has additional containers for AWS deployment. The intent is that this provides an open framework for extension into other platforms.
 
 The `nscale` root folder looks as follows:
 

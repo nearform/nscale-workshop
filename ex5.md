@@ -8,7 +8,7 @@ This tutorial covers:
 
 Add a buggy alert
 ------------
-Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app.js` and addan alert after the 'Your code here' comment:
+Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
 
 	...
         initialize: function () {
@@ -19,7 +19,7 @@ Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app
 
 Build the container and deploy the latest revision:
 
-	nsd container buid sudc web
+	nsd container build sudc web
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
 
@@ -53,7 +53,7 @@ Start by removing the buggy alert from the code:
 
 Roll forward the change:
 
-	nsd container buid sudc web
+	nsd container build sudc web
 	nsd revision list sudc
 	nsd revision deploy sudc <revision id>
 	
