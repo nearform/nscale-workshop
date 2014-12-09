@@ -4,11 +4,11 @@ Direct deployment on Digital Ocean
 Since version 0.9 nscale supports _any cloud provider that give SSH
 access_, plus bare-metal deployments.
 
-In this tutorial we will use [Digital Ocean](do-referral). If you do not
+In this tutorial we will use [Digital Ocean][doreferral]. If you do not
 have an account, signing up through that link gives you 10$ of credit, enough to run
 through this tutorial.
 
-In this tutorial we will deploy our beloved [startup death clock](sudc)
+In this tutorial we will deploy our beloved [startup death clock][sudc]
 application on a single machine, plus a nscale deployment machine.
 
 <a name="nscale-machine"></a>
@@ -205,4 +205,4 @@ You can see the result of this tutorial at:
 https://github.com/nearform/sudc-system/tree/direct
 
 [sudc]: http://github.com/nearform/sudc-system
-[do-referral]: https://www.digitalocean.com/?refcode=c85081546a8e
+[doreferral]: https://www.digitalocean.com/?refcode=c85081546a8e
