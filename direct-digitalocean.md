@@ -40,9 +40,10 @@ curl https://raw.githubusercontent.com/creationix/nvm/v0.18.0/install.sh | bash
 Then, logoff, login and run:
 
 ```bash
-add-apt-repository ppa:chris-lea/node.js
 apt-get update
-apt-get install build-essential nodejs
+apt-get install build-essential
+nvm install v0.10.33
+nvm alias default v0.10.33
 npm install nscale -g
 ```
 
