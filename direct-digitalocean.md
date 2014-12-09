@@ -44,7 +44,8 @@ apt-get update
 apt-get install build-essential
 nvm install v0.10.33
 nvm alias default v0.10.33
-npm install nscale -g
+npm install npm@latest -g --unsafe-perm
+npm install nscale -g --unsafe-perm
 ```
 
 node.js and nscale are now installed, launch it via `nsd ser start`.
