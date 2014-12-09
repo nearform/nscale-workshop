@@ -147,7 +147,7 @@ coming!
 Edit the system definition
 --------------------------
 
-Create a new file named `definitions/machines.json` in the project with content:
+Create a new file named `definitions/machines.js` in the project with content:
 
 ```js
 exports.machine = {
