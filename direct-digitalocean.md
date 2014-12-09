@@ -77,7 +77,7 @@ We need to generate an ssh key with no passphrase for this project:
 ssh-keygen -t rsa
 ```
 
-Type no passphrase, and save it as `sudc-key`.
+Type no passphrase, and save it as `sudc-key`, not as `~/.ssh/sudc-key`.
 
 Creating a new machine
 ----------------------
