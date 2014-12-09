@@ -64,6 +64,7 @@ System set up
 -------------
 
 ```bash
+nsd login
 git clone git@github.com:nearform/sudc-system.git
 cd sudc-system
 nsd sys link .
