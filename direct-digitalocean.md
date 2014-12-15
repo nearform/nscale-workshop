@@ -182,6 +182,12 @@ exports.topology = {
 (you can specify more than one instance on the same host postponing
 `$<identifier>`)
 
+Compile your topology with:
+
+```bash
+nsd sys comp direct
+```
+
 Deploying!
 ----------
 
