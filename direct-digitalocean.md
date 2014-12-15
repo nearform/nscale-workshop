@@ -130,7 +130,7 @@ to:
     "analysis": {
       "require": "nscale-direct-analyzer",
       "specific": {
-        "user": "root"
+        "user": "root",
         "identityFile": "/root/sudc-system/sudc-key"
       }
     }
