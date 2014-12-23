@@ -66,4 +66,81 @@ restarted.
 Setting up a new system with a dockerized database
 --------------------------------------------------
 
+### Create a new app
+
+We are going to create a _extremely simple_ REST key/value store on top of
+Redis.
+
+Launch:
+
+```bash
+$ nsd sys create
+? What is the system name? nscale-kv
+? What is the system namespace? nscalekv
+? Confirm creating system "nscale-kv" with namespace "nscale-kv"? Yes
+```
+
+Then:
+
+```bash
+cd nscale-kv
+```
+
+### Add a database
+
+Fire up your editor, and create a new `definitions/databases.js` file
+with the content:
+
+```js
+exports.redis = {
+  type: 'docker',
+  specific: {
+    name: 'redis',
+    execute: {
+      args: '-d -p 6379:6379'
+    }
+  }
+};
+```
+
+Then, edit the topology section of `system.js` into:
+
+```js
+exports.topology = {
+  local: {
+  },
+  process: {
+    root: ['redis']
+  }
+};
+```
+
+Then, compile and build this topology:
+
+```bash
+nsd sys comp process
+nsd cont buildall
+nsd rev dep head
+```
+
+To check that everything is fine, launch:
+```bash
+docker ps
+```
+
+And note down your container name, then:
+
+```bash
+docker run -it --link IMAGE_NAME:redis --rm redis sh -c 'exec redis-cli
+-h "$REDIS_PORT_6379_TCP_ADDR" -p "$REDIS_PORT_6379_TCP_PORT"'
+```
+
+Where you should replace IMAGE\_NAME with the name you just noted down.
+
+nscale can now spin up a Redis server for your local developement!
+
+### Add your app
+
+First, create a git repository on Github/BitBucket/whatever for our new
+project `nscale-kv-demo`.
 
