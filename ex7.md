@@ -52,7 +52,7 @@ exports.root = {
 };
 
 exports.web = {
-  type: 'process, ',
+  type: 'process',
   specific: {
     name: 'redis',
     execute: {
