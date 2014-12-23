@@ -13,7 +13,13 @@ The most important feature for the development work it is the onboarding
 of new developers into the project and manage any changes in the
 dependencies easily.
 
+This guide is composed of two sections:
 
+* [Editing an existing system](#existing)
+* [Setting up a new system with a dockerized database](#new-system)
+
+
+<a name="existing"></a>
 Editing an existing system
 --------------------------
 
@@ -63,6 +69,7 @@ You will see in the tailing log that the process have been automatically
 restarted.
 
 
+<a name="new-system"></a>
 Setting up a new system with a dockerized database
 --------------------------------------------------
 
