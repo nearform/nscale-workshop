@@ -182,7 +182,7 @@ services.js contains some javascript that defines the two containers.
 #### system.js
 system.js holds the system topology and identity information.
 
-g	exports.name = 'nscaledemo';
+	exports.name = 'nscaledemo';
 	exports.namespace = 'nscaledemo';
 	exports.id = 'e1144711-47bb-5931-9117-94f01dd20f6f';
 
@@ -243,7 +243,7 @@ giving the revision id from the top of the revision list. You can also
 abbreviate any command word down to 3 chars, and omit the system id if
 you are in the system directory, like so:
 
-  nsd rev dep <revisionid>
+  	nsd rev dep <revisionid>
 
 `nscale` will now deploy the container. We can check that the deploy went as planned using Docker like so:
 
