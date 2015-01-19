@@ -51,7 +51,7 @@ exports.root = {
   type: 'container'
 };
 
-exports.web = {
+exports.redis = {
   type: 'process',
   specific: {
     name: 'redis',
@@ -93,13 +93,13 @@ exports.topology = {
 ```
 
 ```js
-nsd system compile workshop local
+nsd system compile registry local
 ```
 
 Now, let's build our containers:
 
 ```bash
-$ nsd container buildall
+$ nsd container buildall registry
 ```
 
 We'll check the revision list again:
@@ -118,7 +118,7 @@ Deploy
 All we have to do now is deploy:
 
 ```bash
-$ nsd rev deploy workshop 15dff
+$ nsd rev deploy registry 15dff
 ```
 
 Our container should be running just fine, we can use the following to see it in action:
@@ -132,3 +132,5 @@ Linux:
 ```bash
 $ redis-cli
 ```
+
+[Next up: exercise 8] (https://github.com/nearform/nscale-workshop/blob/master/ex8.md)
