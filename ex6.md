@@ -82,3 +82,4 @@ And check `sudc` is working as expected again:
 	open http://$(boot2docker ip):8000 # Mac OS X
 	open http://localhost:8000 # linux
 
+[Next up: exercise 7] (https://github.com/nearform/nscale-workshop/edit/master/ex7.md)
