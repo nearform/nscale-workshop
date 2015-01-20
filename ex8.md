@@ -3,7 +3,7 @@ Deploying on AWS
 
 This tutorial covers:
 
-1. Installing nscale on AWS
+1. Installing nscale on an EC2 instance
 2. AWS configuration file updates
 3. Deployment into AWS
 4. Check and fix on AWS
@@ -18,7 +18,13 @@ nscale should be installed on AWS in a similar manner to a direct linux install:
 
 * connect to your newly booted VM and install docker as per the instructions [here](http://docs.docker.com/installation/ubuntulinux/)
 
-* add yourself to the docker group using: sudo usermod -G docker -a `whoami`
+* add yourself to the docker group using:
+
+	`$sudo usermod -G docker -a $(whoami)`
+
+* It is recommended you install the build-essentials package. Many default AMIs do not come with packages such as make and g++. This will ensure you have the packages required for some npm modules to work. Failing to do so may lead to problems installing nscale depending on the AMI you launched.
+
+	`$sudo apt-get install build-essential`
 
 * Install node and npm from [here](http://nodejs.org/download/)
 
@@ -32,12 +38,18 @@ Once the above dependencies have been met you can proceed to install nscale usin
 
 You should also make the confiugration changes as outlined [here](https://github.com/nearform/nscale). Specifically remember to set group permissions for the ubuntu user to allow access to docker commands without requiring sudo:
 
-    sudo usermod -G docker -a `whoami`
+    sudo usermod -G docker -a $(whoami)
 
 
 Configuring AMIs for use with nscale
 ------------------------------------
-A base AMI should be created that is configured for management by nscale. This is just a base image that has had docker installed, and the appropriate secrutiy permsission set. A great way of setting this up is to use the AWS configuration tools to create a private image of the system you have just installed. Do this now!
+A base AMI configured for management by nscale should be created. We can just create a reusable image based off our newly configured instance as per above. An easy way to do this is through the EC2 Dashboard:
+
+* Find the instance you've just set up and right click.
+* Image > Create Image.
+* Follow the steps provided.
+
+See [here.] (http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-CreateImage.html) if you would prefer to use the AWS Command Line Interface tools.   
 
 Once the server has been imaged, make a note of the ami identifier and log back into the running management system.
 
