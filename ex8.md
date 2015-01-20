@@ -55,7 +55,7 @@ Once the server has been imaged, make a note of the ami identifier and log back 
 
 AWS configuration file updates
 ------------------------------
-In order to operate correctly on AWS the nscale coniguration file requires some additional parameters. These are as follows:
+In order to operate correctly on AWS the nscale coniguration file (~/.nscale/config/config.json) requires some additional parameters. These are as follows:
 
 * Kernel section
   * user - the username to use when connecting to remove systems (ubuntu)
