@@ -19,7 +19,7 @@ know to deploy your application.
 Let's go ahead and create a new system with:
 
 ```bash
-$ nsd sys create
+$ nscale sys create
 prompt: name:  workshop
 prompt: namespace:  nscale
 create system: workshop with namespace: nscale?
@@ -30,17 +30,17 @@ ok
 Now we can check that everything is as expected:
 
 ```bash
-$ nsd sys list
+$ nscale sys list
 Name                           Id
 workshop                       2de30af9-fdc4-41ff-9b88-cd47eacb7f77
 ```
 
 (In `nscale`, you can shorten commands down to 3 chars.)
 
-The `list` command will return any systems that `nsd` is aware of, 
+The `list` command will return any systems that `nscale` is aware of,
 including our new `nscale_workshop` system:
 
-The `nsd sys create` creates a new git repository in the current
+The `nscale sys create` creates a new git repository in the current
 directory. Go ahead and have a look at the files in there.
 
 ```
@@ -51,30 +51,22 @@ $ tree # you may not have tree installed
 │   └── services.js
 ├── deployed.json
 ├── map.js
-├── system.js
-├── system.json
-└── timeline.json
+└── system.js
 ```
 
 1 directory, 6 files
 
-There are three files:
+There are two main files there:
 
 1. `system.js` is the _source of knowledge_ of a system managed by
    nscale. We will edit this shortly.
 2. `definitions/services.js` contains the definitions on how to build
    our containers. We will edit this shortly.
-3. `deployed.json` contains the currently deployed system, you should
-   not edit this file directly.
-4. `system.json` contains the system definition, all the containers and
-   how to build them, you should not edit this file directly.
-5. `timeline.json` contains all the events that happened in the system,
-    you should not edit this file directly.
 
 Preparing the Application
 -------------------------
 
-Containers should live in a git repository, this allows `nscale` to check 
+Containers should live in a git repository, this allows `nscale` to check
 out the repo and build the containers for us.
 
 Let's take the example we built in [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and place it in a git repository on github.
@@ -89,7 +81,7 @@ currently looks like:
 
 ```js
 exports.root = {
-  type: 'container'
+  type: 'blank-container'
 };
 
 // add here more definitions
@@ -99,11 +91,11 @@ To begin defining our system, we need to change it to:
 
 ```js
 exports.root = {
-  type: 'container'
+  type: 'blank-container'
 };
 
 exports.web = {
-  type: 'process',
+  type: 'docker',
   specific: {
     repositoryUrl: 'git@github.com:nearform/nscale-workshop-intro-docker-sample.git',
     execute: {
@@ -137,57 +129,34 @@ exports.namespace = 'nscale';
 exports.id = '2de30af9-fdc4-41ff-9b88-cd47eacb7f77';
 
 exports.topology = {
-  local: {
+  development: {
     root: ['web']
   }
 };
 ```
 
-In order for everything to work fine, we need to update one more file, `map.js`, to:
-
-```js
-exports.types = {
-  local: {
-  }
-}
-
-exports.ids = {
-  local: {
-    root: { id: '10' },
-    web: { name: 'web' }
-  }
-}
-```
-
-This file helps with the matching between the _symbolic names_ used in
-the definitions and the analysis run by the nscale.
-
 This abstract system definition __must__ be compiled into the
-`system.json`. In order to do so, run
+`development.json`, which correspond to the _same key used in `exports.topology`_.
+We can define an unlimited number of keys there.
+In order to compile, we run:
 
 ```js
-nsd system compile workshop local
+nscale system compile workshop development
 ```
 
 Now, let's build our containers:
 
 ```bash
-$ nsd container build workshop web
+$ nscale container build workshop web
 ```
 
 We'll check the revision list again:
 
 ```bash
-$ nsd rev list workshop
-revision             deployed who                                                     time                      description
-06a25df3d163818f104… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:53:23.000Z  built container: web
-5a1f0c5ba2b675ebf07… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:33:11.000Z  system compile
-475f94e42644a0b66cd… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:32:32.000Z  system compile
-23f506e70ef36e707b8… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:31:24.000Z  system compile
-f62a1f316b41e04fb75… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:57.000Z  system compile
-daed56b003f6e83502a… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:41.000Z  system compile
-b37e43f8e21b1159bd1… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:29:30.000Z  system compile
-940eb3f5a4b977835ba… false    Matteo Collina <hello@matteocollina.com>                2014-10-17T10:20:44.000Z  first commit
+$ nscale rev list workshop
+revision             deployed     who                                      time                      description
+f75ff4f3b2ecdf378ad…              Matteo Collina <hello@matteocollina.com> 2015-01-23T15:50:25.000Z  system compile
+26490f52c61e020ffe0…              Matteo Collina <hello@matteocollina.com> 2015-01-23T15:41:16.000Z  first commit
 ```
 
 Deploy
@@ -196,14 +165,15 @@ Deploy
 All we have to do now is deploy:
 
 ```bash
-$ nsd rev deploy workshop 06a2
+$ nscale rev deploy workshop f75f
 ```
 
-The 06a2 part is just the first chars of the revision identifier from `nsd rev list`
+The 06a2 part is just the first chars of the revision identifier from `nscale rev list`.
+We can also use the alias `latest` to point to the latest revision.
 
 Our container should be running just fine, we can use the following to see it in action:
 
-OS X : 
+OS X :
 ```bash
 $ curl http://$(boot2docker ip):1337
 ```
@@ -211,6 +181,79 @@ $ curl http://$(boot2docker ip):1337
 Linux:
 ```bash
 $ curl http://localhost:1337
+```
+
+### What is deployed?
+
+We can check which revision is deployed with:
+
+```bash
+$ nscale rev list workshop
+revision             deployed     who                                      time                      description
+f75ff4f3b2ecdf378ad… development  Matteo Collina <hello@matteocollina.com> 2015-01-23T15:50:25.000Z  system compile
+26490f52c61e020ffe0…              Matteo Collina <hello@matteocollina.com> 2015-01-23T15:41:16.000Z  first commit
+```
+
+And then we can ask that revision `development.json`:
+
+```bash
+$ nscale rev get f75ff dev # from the project folder
+{
+  "name": "workshop",
+  "namespace": "nscale",
+  "id": "98114ae6-0ab7-438f-b7a3-e7def8101117",
+  "containerDefinitions": [
+    {
+      "type": "blank-container",
+      "id": "root",
+      "name": "root"
+    },
+    {
+      "type": "docker",
+      "specific": {
+        "repositoryUrl":
+"git@github.com:nearform/nscale-workshop-intro-docker-sample.git",
+        "execute": {
+          "args": "-p 1337:1337 -d"
+        },
+        "commit": "92ea17ace03f9184ca0818707b952f7ad64f8d1d"
+      },
+      "id": "web$92ea17ace03f9184ca0818707b952f7ad64f8d1d",
+      "name": "web"
+    }
+  ],
+  "topology": {
+    "containers": {
+      "root-16f4f95b": {
+        "id": "root-16f4f95b",
+        "containedBy": "root-16f4f95b",
+        "containerDefinitionId": "root",
+        "type": "blank-container",
+        "contains": [
+          "web-c31f912e$92ea17ace03f9184ca0818707b952f7ad64f8d1d"
+        ],
+        "specific": {}
+      },
+      "web-c31f912e$92ea17ace03f9184ca0818707b952f7ad64f8d1d": {
+        "id": "web-c31f912e$92ea17ace03f9184ca0818707b952f7ad64f8d1d",
+        "containedBy": "root-16f4f95b",
+        "containerDefinitionId":
+"web$92ea17ace03f9184ca0818707b952f7ad64f8d1d",
+        "type": "docker",
+        "contains": [],
+        "specific": {
+          "repositoryUrl":
+"git@github.com:nearform/nscale-workshop-intro-docker-sample.git",
+          "execute": {
+            "args": "-p 1337:1337 -d"
+          },
+          "commit": "92ea17ace03f9184ca0818707b952f7ad64f8d1d"
+        }
+      }
+    },
+    "name": "development"
+  }
+}
 ```
 
 Custom build directory
