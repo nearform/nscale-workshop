@@ -50,7 +50,7 @@ other groups__.
 
 We can do a quick check to verify installation success by running the `nscale` command line client:
 
-	nsd help
+	nscale help
 
 We should see output similar to the following:
 
@@ -85,17 +85,17 @@ We should see output similar to the following:
 To start the server we run:
 
 ```sh
-nsd server start
+nscale server start
 ```
 
 To stop the server we run:
 
-	nsd server stop
+	nscale server stop
 
 ### Setting credentials
 We need to tell `nscale` who you are:
 
-	nsd login
+	nscale login
 
 `nscale` will read our git credentials and use them for making system commits as we build and deploy containers.
 
@@ -107,9 +107,9 @@ A system is defined by a system definition file and holds all of the meta inform
 
 Let's check that the `system list` command works.
 
-With the `nsd server` running, let's execute the following command:
+With the `nscale server` running, let's execute the following command:
 
-	nsd system list
+	nscale system list
 
 We should see the following output
 
@@ -128,11 +128,15 @@ Create a clean working folder on your machine and cd into it.
 
 To grab this system we run:
 
-	nsd system clone git@github.com:nearform/nscaledemo.git
+```sh
+git clone git@github.com:nearform/nscaledemo.git
+cd nscaledemo
+nscale sys link .
+```
 
 nscale should have cloned this respository into your current working directory. You should now see a folder called nscaledemo. Let's check that nscale can see this with the `list` command:
 
-	nsd system list
+	nscale system list
 
 We should see the following output:
 
@@ -150,26 +154,39 @@ cd nscaledemo
 
 We should see from the configuration that nscale keeps its data in ~/.nscale/data.
 
-Now lets look at the nscaledemo repository. It contains the following files:
+Now lets look at the nscaledemo repository. Run `tree` to get this
+output:
 
-	├── README.md 
-	├── definitions
-	│   └── services.js
-	├── deployed.json
-	├── map.js
-	├── system.js
-	├── system.json
-	└── timeline.json
+```sh
+.
+├── README.md
+├── definitions
+│   └── services.js
+├── map.js
+├── system.js
+├── development.json
+└── workspace
+    └── nscaledemoweb
+        ├── Dockerfile
+        ├── README.md
+        ├── index.js
+        └── package.json
+```
+
+As you can see, the `workspace` folder contains our example. The
+`development.json` file contains the immutable revision for this system.
 
 #### definitions/services.js
-services.js contains some javascript that defines the two containers. 
+
+`services.js` contains some javascript that defines the two containers.
+
 
 	exports.root = {
-  		type: 'container'
+    type: 'container'
 	};
 
 	exports.web = {
-	  type: 'process',
+	  type: 'docker',
 	  specific: {
 	    repositoryUrl: 'git@github.com:nearform/nscaledemoweb.git',
 	    execute: {
@@ -187,67 +204,86 @@ system.js holds the system topology and identity information.
 	exports.id = 'e1144711-47bb-5931-9117-94f01dd20f6f';
 
 	exports.topology = {
-	  local: {
+	  development: {
 	    root: ['web']
 	  }
 	};
 
-nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in system.json. Lets run a compile now:
+nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. Lets run a compile now:
 
-	nsd system compile nscaledemo local
+	nscale system compile nscaledemo
 
-This will run a compile of nscaledemo to the local target. Lets go ahead and take a look at the contents of system.json.
+This will run a compile of nscaledemo to the development environment, which can be abbreviated in a unambiguous way. Lets go ahead and take a look at the contents of `development.json`.
+If you plan to have a staging and production environment, each of those
+will be compiled in their own `.json` file.
+
+Each compilations compiles all environment to allow _simple promotion_
+between staging and production setups.
 
 ### Inspect the demo system
 Now that we have run a compile, let's use nscale to inspect the `nscaledemo` system:
 
-	nsd container list
+	nscale container list
 
 If you are running the command outside of the nscaledemo folder, you
 need to:
 
-	nsd container list nscaledemo
+	nscale container list nscaledemo
 
 We should see output similar to the following:
 
-	Name                 Type            Id                                                 
-	Machine              blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c                               
-	web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb             
+	Name                 Type            Id
+	Machine              blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c
+	web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb
 
 There are two containers definitions, blank root container and a docker container. Let's take a look at the revision history:
 
-	nsd revision list
+	nscale revision list
 
 We should see a list of system revisions for the current system.
 
 
 ### Building a container
-Let's now build the example web container by running the following:
+Let's now build all the containers by issuing:
 
-	nsd container build web
+	nscale container buildall
 
-`nscale` will build the `nscaledemo` web container so that it's ready to be deployed. This will take a few mins so for the curious, open a new terminal window and execute ```nsd server logs```.
+`nscale` will build the `nscaledemo` web container so that it's ready to be deployed. This will take a few mins so for the curious, open a new terminal window and execute ```nscale server logs```.
 
 Once the command completes we can check the revision history:
 
-	nsd revision list
+	nscale revision list
 
 We should see an updated commit, that is, a new immutable system revision that includes the freshly built container.
 
 ### Deploying the container
+
 Let's deploy the container that we just built, run:
 
-	nsd revision deploy <systemid> <revisionid>
+```
+nscale revision deploy <systemid> <revisionid> <environment>
+```
 
 giving the revision id from the top of the revision list. You can also
 abbreviate any command word down to 3 chars, and omit the system id if
 you are in the system directory, like so:
 
-  	nsd rev dep <revisionid>
+```
+nscale rev dep <revisionid> <environment>
+```
+
+Finally, we provide a shortcut to the latest commit, so you can
+effectively just run:
+
+```sh
+nscale rev dep latest dev
+```
 
 `nscale` will now deploy the container. We can check that the deploy went as planned using Docker like so:
 
-	docker ps
+```sh
+docker ps
+```
 
 We should see that there is one running container. We can further verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
 
