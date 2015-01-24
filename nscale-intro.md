@@ -232,9 +232,11 @@ need to:
 
 We should see output similar to the following:
 
-	Name                 Type            Id
-	Machine              blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c
-	web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb
+```
+Name                 Type                 Id
+root                 blank-container      root
+web                  docker               web$45349ac55c2483364dc550b9f207daa4cae541bc
+```
 
 There are two containers definitions, blank root container and a docker container. Let's take a look at the revision history:
 
