@@ -11,15 +11,18 @@ Clone the Application
 ---------------------
 Lets get started by cloning the repository for a larger application by running the following:
 
-	nsd system clone git@github.com:nearform/sudc-system.git
+```
+git clone git@github.com:nearform/sudc-system.git sudc
+nscale system link sudc
+```
 
 This will pull down the code for the Startup Death Clock system. First of all lets compile the system:
 
-	nsd system compile sudc local
+	nscale system compile sudc
 
 Now let's take a look at the system definition:
 
-	nsd container list sudc
+	nscale container list sudc
 
 You should see the following containers:
 
@@ -34,14 +37,14 @@ Build the system
 ----------------
 Let's go ahead and build the containers ready for deployment:
 
-	nsd container buildall sudc
+	nscale container buildall sudc
 
 Alternatively, you can build all the containers by themselves:
 
-	nsd container build sudc hist
-	nsd container build sudc real
-	nsd container build sudc doc
-	nsd container build sudc web
+	nscale container build sudc hist
+	nscale container build sudc real
+	nscale container build sudc doc
+	nscale container build sudc web
 
 After those have all completed we should have four containers ready for deployment.
 
@@ -71,7 +74,7 @@ Previewing the deployment
 -------------------------
 Before we deploy the system let's take a look at the commands that will be executed on deployment. Fist we can check the revision list:
 
-	nsd revision list sudc
+	nscale revision list sudc
 
 We should see some output similar to the following:
 
@@ -84,35 +87,83 @@ We should see some output similar to the following:
 	3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition
 	644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
 
+
+revision             deployed     who                                      time                      description
+4eba9c77683f4e5e45d…              Matteo Collina <hello@matteocollina.eom> 2015-01-26T07:33:37.000Z  system compile
+3ea94c23652a377d66d…              Matteo Collina <hello@matteocollina.com> 2015-01-26T07:12:58.000Z  system compile
+2c9e66a6065fdb55a9b…              Matteo Collina <hello@matteocollina.com> 2015-01-24T10:27:43.000Z  system compile
+
+
 Next let's preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
 
-	nsd revision preview sudc <revision id>
+	nscale revision preview sudc <revision id> <environment>
+
+So, we can preview our latest commit with:
+
+```
+nscale revision preview sudc latest development
+```
 
 We should see some output similar to the following:
 
-	execution plan:
-	Command                        Id
-	unlink                         1973bbff-6f80-4f40-ae79-805f04f81690
-	stop                           1973bbff-6f80-4f40-ae79-805f04f81690
-	remove                         1973bbff-6f80-4f40-ae79-805f04f81690
-	add                            a8602f4d-16ff-4dfa-a6d7-3ed79662d50f
-	start                          a8602f4d-16ff-4dfa-a6d7-3ed79662d50f
-	link                           a8602f4d-16ff-4dfa-a6d7-3ed79662d50f
+```
+--> deploying...
+--> deploying plan...
+add doc-c31f912e$77c4014bef47deb4fef3af579f2959457c058ce8 docker
+deploying
+start doc-c31f912e$77c4014bef47deb4fef3af579f2959457c058ce8 docker
+starting
+link doc-c31f912e$77c4014bef47deb4fef3af579f2959457c058ce8 docker
+linking
+add hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f1a6cb docker
+deploying
+start hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f1a6cb docker
+starting
+link hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f1a6cb docker
+linking
+add real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f16af9 docker
+deploying
+start real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f16af9 docker
+starting
+link real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f16af9 docker
+linking
+add web-5a16c094$392947a31ae50228176874ba8f1209c5de33d4a7 docker
+deploying
+start web-5a16c094$392947a31ae50228176874ba8f1209c5de33d4a7 docker
+starting
+link web-5a16c094$392947a31ae50228176874ba8f1209c5de33d4a7 docker
+linking
 
-	operations:
-	Host                 Command
-	localhost            docker kill 81bbf1284e5fee5b5f3e73c49b27c76b7b6303b2f738fb4d83b7a2fcd03c18fd
-	localhost            docker ps -a --no-trunc | grep Exit | awk '{print $1}' | xargs -I {} docker rm {}
-	localhost            docker images --no-trunc| grep none | awk '{print $3}' | xargs -I {} docker rmi {}
-	localhost            docker run -e WEB_HOST=10.75.29.243 -p 8000:8000 -d sudc/web-223 sh /web/run.sh
+execution plan:
+Command                        Id
+add                            doc-c31f912e$77c4014bef47deb4fef3af579f2959457c05…
+start                          doc-c31f912e$77c4014bef47deb4fef3af579f2959457c05…
+link                           doc-c31f912e$77c4014bef47deb4fef3af579f2959457c05…
+add                            hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f…
+start                          hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f…
+link                           hist-b418a1b8$39f0c71b89f3ba78064468c0af79017927f…
+add                            real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f…
+start                          real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f…
+link                           real-2d11f002$5309ad7aeba319fd44adb18bbc983f4587f…
+add                            web-5a16c094$392947a31ae50228176874ba8f1209c5de33…
+start                          web-5a16c094$392947a31ae50228176874ba8f1209c5de33…
+link                           web-5a16c094$392947a31ae50228176874ba8f1209c5de33…
 
-In order to produce this view, `nscale` has computed a delta between what the latest revisions of the system should look like compared with what is actually running on your system.
+operations:
+Host                 Command
+localhost            docker run  -p 9002:9002 -d localhost:8011/sudc/doc-77c4014bef47deb4fef3af579f2959457c058ce8 node /srv/doc-srv.js && docker tag localhost:8011/sudc/d…
+localhost            docker run  -p 9003:9003 -d localhost:8011/sudc/hist-39f0c71b89f3ba78064468c0af79017927f1a6cb node /srv/hist-srv.js && docker tag localhost:8011/sudc…
+localhost            docker run  -p 9001:9001 -d localhost:8011/sudc/real-5309ad7aeba319fd44adb18bbc983f4587f16af9 node /srv/real-srv.js && docker tag localhost:8011/sudc…
+localhost            docker run  -p 8000:8000 -d localhost:8011/sudc/web-392947a31ae50228176874ba8f1209c5de33d4a7 /bin/bash /web/run.sh && docker tag localhost:8011/sudc/…
+```
+
+In order to produce this view, `nscale` has computed a delta between what the latest revisions of the system should look like compared with what is actually running on your system. If you are interested, all the actions are generated using a [task-planning algorithm](http://en.wikipedia.org/wiki/Automated_planning_and_scheduling) (yes, it is an AI branch) which lives in [nscale-planner](https://github.com/nearform/nscale-planner).
 
 Run the deployment
 ------------------
 Let's go ahead and run the deployment:
 
-	nsd revision deploy sudc <revision id>
+	nscale revision deploy sudc latest
 
 `nscale` will now execute the deployment that we previewed in the last step. Once this completes we should have a running system composed of four docker containers. We van verify everything's working by pointing our browser to the docker host ip address port 8000 on Mac OS X or localhost on linux.
 
