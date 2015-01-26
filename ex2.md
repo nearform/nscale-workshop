@@ -49,8 +49,6 @@ $ tree # you may not have tree installed
 .
 ├── definitions
 │   └── services.js
-├── deployed.json
-├── map.js
 └── system.js
 ```
 
@@ -59,9 +57,11 @@ $ tree # you may not have tree installed
 There are two main files there:
 
 1. `system.js` is the _source of knowledge_ of a system managed by
-   nscale. We will edit this shortly.
+   nscale.
 2. `definitions/services.js` contains the definitions on how to build
-   our containers. We will edit this shortly.
+   our containers.
+
+We will edit both shortly.
 
 Preparing the Application
 -------------------------

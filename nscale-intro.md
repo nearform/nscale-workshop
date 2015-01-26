@@ -162,7 +162,6 @@ output:
 ├── README.md
 ├── definitions
 │   └── services.js
-├── map.js
 ├── system.js
 ├── development.json
 └── workspace
