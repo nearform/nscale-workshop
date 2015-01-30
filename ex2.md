@@ -49,8 +49,6 @@ $ tree # you may not have tree installed
 .
 ├── definitions
 │   └── services.js
-├── map.js
-├── README.md
 └── system.js
 ```
 
