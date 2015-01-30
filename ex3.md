@@ -18,7 +18,7 @@ nscale system link sudc
 
 This will pull down the code for the Startup Death Clock system. First of all lets compile the system:
 
-	nscale system compile sudc
+	nscale system compile sudc development
 
 Now let's take a look at the system definition:
 
@@ -163,7 +163,7 @@ Run the deployment
 ------------------
 Let's go ahead and run the deployment:
 
-	nscale revision deploy sudc latest
+	nscale revision deploy sudc latest development
 
 `nscale` will now execute the deployment that we previewed in the last step. Once this completes we should have a running system composed of four docker containers. We van verify everything's working by pointing our browser to the docker host ip address port 8000 on Mac OS X or localhost on linux.
 
