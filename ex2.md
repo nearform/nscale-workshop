@@ -49,10 +49,12 @@ $ tree # you may not have tree installed
 .
 ├── definitions
 │   └── services.js
+├── map.js
+├── README.md
 └── system.js
 ```
 
-1 directory, 6 files
+1 directory, 4 files
 
 There are two main files there:
 
@@ -136,7 +138,7 @@ exports.topology = {
 ```
 
 This abstract system definition __must__ be compiled into the
-`development.json`, which correspond to the _same key used in `exports.topology`_.
+`development.json`, which corresponds to the _same key used in `exports.topology`_.
 We can define an unlimited number of keys there.
 In order to compile, we run:
 
@@ -165,10 +167,10 @@ Deploy
 All we have to do now is deploy:
 
 ```bash
-$ nscale rev deploy workshop f75f
+$ nscale rev deploy workshop f75f development
 ```
 
-The 06a2 part is just the first chars of the revision identifier from `nscale rev list`.
+The f75f part is just the first chars of the revision identifier from `nscale rev list`.
 We can also use the alias `latest` to point to the latest revision.
 
 Our container should be running just fine, we can use the following to see it in action:
