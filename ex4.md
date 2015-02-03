@@ -1,4 +1,4 @@
-Fixing a bug
+Configuration & Logs
 ============
 
 This tutorial covers:
