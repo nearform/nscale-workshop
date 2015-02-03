@@ -41,7 +41,7 @@ including our new `nscale_workshop` system:
 The `nscale sys create` creates a new git repository in the current
 directory. Go ahead and have a look at the files in there.
 
-```
+```bash
 $ cd workshop
 $ tree # you may not have tree installed
 .
@@ -213,7 +213,7 @@ f75ff4f3b2ecdf378ad… development  Matteo Collina <hello@matteocollina.com> 201
 
 And then we can ask that revision `development.json`:
 
-```bash
+```js
 $ nscale rev get f75ff dev # from the project folder
 {
   "name": "workshop",
