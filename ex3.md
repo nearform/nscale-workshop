@@ -12,27 +12,29 @@ Clone the Application
 Lets get started by cloning the repository for a larger application by doing the following:
 
 Pull down the code for the sudc-system:
-
-```
+```bash
 git clone git@github.com:nearform/sudc-system.git sudc
 nscale system link sudc
 ```
-
 Compile the system:
 
-	nscale system compile sudc development
-
+```bash
+nscale system compile sudc development
+```
 Now let's take a look at the system definition:
 
-	nscale container list sudc
-
+```bash
+nscale container list sudc
+```
 You should see the following containers:
 
-	root				         root
+```bash
+	root                 root
 	web                  docker
 	hist                 docker
 	real                 docker
 	doc                  docker
+```
 
 The application is composed of a web front end and three additional services.
 
@@ -40,14 +42,18 @@ Build the system
 ----------------
 Let's go ahead and build the containers ready for deployment:
 
-	nscale container buildall sudc
+```bash
+nscale container buildall sudc
+```
 
 Alternatively, you can build all the containers by themselves:
 
-	nscale container build sudc hist
-	nscale container build sudc real
-	nscale container build sudc doc
-	nscale container build sudc web
+```bash
+nscale container build sudc hist
+nscale container build sudc real
+nscale container build sudc doc
+nscale container build sudc web
+```
 
 After those have all completed we should have four containers ready for deployment.
 
@@ -76,40 +82,42 @@ and show the timeline by clicking on the System timeline tab.
 Previewing the deployment
 -------------------------
 Before we deploy the system let's take a look at the commands that will be executed on deployment. Fist we can check the revision list:
-
-	nscale revision list sudc
+```bash
+nscale revision list sudc
+```
 
 We should see some output similar to the following:
-
-	revision             deployed who                                                     time                      description
-	136c840f016c57d0e23… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:10:11.000Z  built container: 2b36df5faa5c92262aa675cd0a07312a…
-	31d0cff07829dc15e29… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:29.000Z  built container: 51df875511be6f4951a1bd00610db2a9…
-	7e48d13a98746c8356a… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:09.000Z  built container: f34344ef6f773c3e59b9cf84d01bf0ff…
-	1483ec749e9202dde10… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:08:46.000Z  built container: 25a6d9868347b906345513aaf99e45ad…
-	5cab4567fef325bba9f… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:06:24.000Z  first commit
-	3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition
-	644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
+```bash
+revision             deployed who                                                     time                      description
+136c840f016c57d0e23… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:10:11.000Z  built container: 2b36df5faa5c92262aa675cd0a07312a…
+31d0cff07829dc15e29… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:29.000Z  built container: 51df875511be6f4951a1bd00610db2a9…
+7e48d13a98746c8356a… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:09.000Z  built container: f34344ef6f773c3e59b9cf84d01bf0ff…
+1483ec749e9202dde10… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:08:46.000Z  built container: 25a6d9868347b906345513aaf99e45ad…
+5cab4567fef325bba9f… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:06:24.000Z  first commit
+3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition
+644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
 
 
 revision             deployed     who                                      time                      description
 4eba9c77683f4e5e45d…              Matteo Collina <hello@matteocollina.eom> 2015-01-26T07:33:37.000Z  system compile
 3ea94c23652a377d66d…              Matteo Collina <hello@matteocollina.com> 2015-01-26T07:12:58.000Z  system compile
 2c9e66a6065fdb55a9b…              Matteo Collina <hello@matteocollina.com> 2015-01-24T10:27:43.000Z  system compile
-
+```
 
 Next let's preview what a deploy of the latest build would look like by previewing the revision id from the top of the revision list:
-
-	nscale revision preview sudc <revision id> <environment>
+```bash
+nscale revision preview sudc <revision id> <environment>
+```
 
 So, we can preview our latest commit with:
 
-```
+```bash
 nscale revision preview sudc latest development
 ```
 
 We should see some output similar to the following:
 
-```
+```bash
 --> deploying...
 --> deploying plan...
 add doc-c31f912e$77c4014bef47deb4fef3af579f2959457c058ce8 docker
@@ -165,9 +173,9 @@ In order to produce this view, `nscale` has computed a delta between what the la
 Run the deployment
 ------------------
 Let's go ahead and run the deployment:
-
-	nscale revision deploy sudc latest
-
+```bash
+nscale revision deploy sudc latest
+```
 `nscale` will now execute the deployment that we previewed in the last step. Once this completes we should have a running system composed of four docker containers. We van verify everything's working by pointing our browser to the docker host ip address port 8000 on Mac OS X or localhost on linux.
 
 OS X:
@@ -175,7 +183,5 @@ OS X:
 
 Linux:
 	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
-
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/sudc.png)
 
 [Next up: exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md)
