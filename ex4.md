@@ -15,32 +15,37 @@ The kernel section defines the following:
 	port - the port the nscale kernel should run on
 	root - the full path where all nscale data resides - system data, build data and target data
 
-	"kernel": {
-	"port": "8010",
-    "root": "/home/me/.nscale"
-	}
+```js
+"kernel": {
+"port": "8010",
+"root": "/home/me/.nscale"
+}
+```
 
 	Information for AWS is also defined but this is not relevant for now
 
 The modules section defines the following:
 
-
-	"modules": {
-	  "protocol": {
-	    "require": "nscale-protocol",
-	    "specific": {}
-	  },
-	  "authorization": {
-	    "require": "nscale-noauth",
-	    "specific": {
-	      "credentialsPath": "/Users/me/.nscale/data"
-	    }
-	  },
-	  "analysis": {
-	    "require": "nscale-local-analyzer",
-	    "specific": {}
-	  }
-	}
+```js
+"modules": {
+    "protocol": {
+      "require": "nscale-protocol",
+      "specific": {
+      }
+    },
+    "authorization": {
+      "require": "nscale-noauth",
+      "specific": {
+        "credentialsPath": "/home/dara/.nscale/data"
+      }
+    },
+    "analysis": {
+      "require": "nscale-local-analyzer",
+      "specific": {
+      }
+    }
+  },
+```
 
 Right now we the auth module just picks up your git credentials, however this is open for extension with and can be replaced with other authentication strategies.
 
@@ -50,20 +55,22 @@ The containers section defines the following:
 
 	containers - list of supported container types.
 
-	"containers": [
-	  {"require": "blank-container",
-	    "type": "blank-container",
-	    "specific": {}
-	  },
-	  {"require": "docker-container",
-	    "type": "docker",
-	    "specific": {"imageCachePath": "/tmp"}
-	  }
-	  {"require": "process-container",
-      	"type": "process",
-     	"specific": {}
-     }
-	]
+```js
+"containers": [
+    {"require": "blank-container",
+     "type": "blank-container",
+     "specific": {}
+    },
+    {"require": "docker-container",
+     "type": "docker",
+     "specific": {"imageCachePath": "/tmp"}
+    },
+    {"require": "process-container",
+     "type": "process",
+     "specific": {}
+    }
+  ]
+```
 
 For this workshop we are using just the virtualbox and boot2docker containers. Nscale also has additional containers for AWS deployment. The intent is that this provides an open framework for extension into other platforms.
 
@@ -74,9 +81,10 @@ The `nscale` root folder looks as follows:
 Viewing the logs
 ----------------
 We can view the nscale logs at any time by running
-
-	nscale server logs
-	nscale server logs api.log
-	nscale server logs web.log
+```bash
+nscale server logs
+nscale server logs api.log
+nscale server logs web.log
+```
 
 [Next up: exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md)
