@@ -6,8 +6,19 @@ This tutorial covers:
 1. Rolling a deployed system back to a known good state
 2. Rolling a deployed system forward after applying a full fix
 
+Before Making any Changes
+-----------------
+**Before making any changes:***
+cd into the sudc/workspace/sudc-web directory and run a git branch command. 
+If the HEAD is detached, then do 
+```bash
+git checkout master. 
+```
+The HEAD may already have been detached depending on how you've followed the workshops.
+
 Add a buggy alert
 -----------------
+
 Let's break something! Open up `sudc/workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
 
 ```js
@@ -17,7 +28,7 @@ initialize: function () {
 }
 ```
 
-Open the sudc-web directory, stage the changes and commit:
+**cd into the sudc/workspace/sudc-web directory**, stage the changes and commit:
 ```bash	
 git add .
 git commit -m "Added buggy alert"
