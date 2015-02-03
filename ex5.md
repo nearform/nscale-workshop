@@ -7,8 +7,8 @@ This tutorial covers:
 2. Rolling a deployed system forward after applying a full fix
 
 Add a buggy alert
-------------
-Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
+-----------------
+Let's break something! Open up `sudc/workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
 
 	...
         initialize: function () {
@@ -17,49 +17,77 @@ Let's break something! Open up `sudc-system/workspace/sudc-web/web/public/js/app
         }
 	...
 
+Open the sudc-web directory, stage the changes and commit:
+	
+	git add .
+	git commit -m "Added buggy alert"
+
 Build the container and deploy the latest revision:
 
-	nsd container build sudc web
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
+	nscale system compile sudc development
+	nscale container build sudc web
+	nscale revision deploy sudc latest development
 
 Check the site for the buggy alert:
 
+	OSX:
 	open http://$(boot2docker ip):8000
 
+	Linux:
+	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
+
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/bugalert.png)
+
+It is this workflow which allows us to makes changes and deploy them using nscale:
+	
+	- Make changes in code
+	- Commit
+	- (optional) push to Github
+	- System compile
+	- Build relevant container(s)
+	- System Deploy
+
+Pay particular attention to the fact that nscale will checkout repos using the sha of the latest commit, which will detach the HEAD.
 
 Roll back
 ------------
 
 It's time to quickly rollback, picking the **second** revision id:
 
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
+	nscale revision list sudc
+	nscale revision deploy sudc <revision id> development
 
 Check the site is working:
     
-	open http://$(boot2docker ip):8000 # Mac OS X
-	open http://localhost:8000 # linux
+    OSX:
+	open http://$(boot2docker ip):8000
+
+	Linux:
+	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
 
 Roll forward
 ------------
 
 The site is back up and running so let's fix the bug in the code and apply that fix.
+remove the alert statement from app.js and commit or:
 
-Start by removing the buggy alert from the code:
-
-	(cd sudc-system/workspace/sudc-web && git checkout web/public/js/app.js)
+open the sudc/workspace/sudc-web directory
+	
+	git checkout master (because the HEAD is now detached from the container being built)
+	git revert HEAD --no-edit
 
 Roll forward the change:
 
-	nsd container build sudc web
-	nsd revision list sudc
-	nsd revision deploy sudc <revision id>
+	nscale system compile sudc development
+	nscale container build sudc web
+	nscale revision deploy sudc latest development
 	
 Check the site is working:
+    
+    OSX:
+	open http://$(boot2docker ip):8000
 
-	open http://$(boot2docker ip):8000 # Mac OS X
-	open http://localhost:8000 # linux
+	Linux:
+	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
 
 [Next up: exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md)

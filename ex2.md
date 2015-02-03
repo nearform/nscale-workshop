@@ -20,11 +20,9 @@ Let's go ahead and create a new system with:
 
 ```bash
 $ nscale sys create
-prompt: name:  workshop
-prompt: namespace:  nscale
-create system: workshop with namespace: nscale?
-prompt: confirm (y/n):  y
-ok
+? What is the system name? workshop
+? What is the system namespace? nscale
+? Confirm creating system "workshop" with namespace "nscale"? (Y/n) y
 ```
 
 Now we can check that everything is as expected:
@@ -84,7 +82,18 @@ exports.root = {
   type: 'blank-container'
 };
 
-// add here more definitions
+// Example
+//
+// exports.web = {
+//   type: 'docker',
+//     specific: {
+//       repositoryUrl: 'git@github.com:nearform/nscaledemoweb.git',
+//       execute: {
+//         args: '-p 8000:8000 -d',
+//         exec: '/usr/bin/node index.js'
+//       }
+//     }
+// };
 ```
 
 To begin defining our system, we need to change it to:
@@ -113,12 +122,20 @@ Let's open `system.js` in you favorite editor. It currently looks like this:
 ```js
 exports.name = 'workshop';
 exports.namespace = 'nscale';
-exports.id = '2de30af9-fdc4-41ff-9b88-cd47eacb7f77';
+exports.id = '13fc4a5a-f1e3-4bc1-9acf-3ba8a7b65f6a';
 
 exports.topology = {
-  local: {
+  development: {
   }
 };
+
+// Example
+//
+// exports.topology = {
+//   development: {
+//     root: ['web']
+//   }
+// };
 ```
 
 This system is empty, let's add our containers:
@@ -136,7 +153,7 @@ exports.topology = {
 ```
 
 This abstract system definition __must__ be compiled into the
-`development.json`, which correspond to the _same key used in `exports.topology`_.
+`development.json`, which corresponds to the _same key used in `exports.topology`_.
 We can define an unlimited number of keys there.
 In order to compile, we run:
 
@@ -165,10 +182,10 @@ Deploy
 All we have to do now is deploy:
 
 ```bash
-$ nscale rev deploy workshop f75f
+$ nscale rev deploy workshop f75f development
 ```
 
-The 06a2 part is just the first chars of the revision identifier from `nscale rev list`.
+The f75f part is just the first chars of the revision identifier from `nscale rev list`.
 We can also use the alias `latest` to point to the latest revision.
 
 Our container should be running just fine, we can use the following to see it in action:

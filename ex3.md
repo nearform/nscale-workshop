@@ -9,16 +9,18 @@ This tutorial covers:
 
 Clone the Application
 ---------------------
-Lets get started by cloning the repository for a larger application by running the following:
+Lets get started by cloning the repository for a larger application by doing the following:
+
+Pull down the code for the sudc-system:
 
 ```
 git clone git@github.com:nearform/sudc-system.git sudc
 nscale system link sudc
 ```
 
-This will pull down the code for the Startup Death Clock system. First of all lets compile the system:
+Compile the system:
 
-	nscale system compile sudc
+	nscale system compile sudc development
 
 Now let's take a look at the system definition:
 
@@ -26,6 +28,7 @@ Now let's take a look at the system definition:
 
 You should see the following containers:
 
+	root				         root
 	web                  docker
 	hist                 docker
 	real                 docker
@@ -170,8 +173,8 @@ Let's go ahead and run the deployment:
 OS X:
 	open http://$(boot2docker ip):8000
 
-Linux
-	open http://localhost:8000
+Linux:
+	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
 
 ![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/sudc.png)
 
