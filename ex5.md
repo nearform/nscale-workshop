@@ -8,13 +8,13 @@ This tutorial covers:
 
 Before Making any Changes
 -----------------
-**Before making any changes:***
 cd into the sudc/workspace/sudc-web directory and run a git branch command. 
 If the HEAD is detached, then do 
 ```bash
-git checkout master. 
+git checkout master
 ```
 The HEAD may already have been detached depending on how you've followed the workshops.
+(more on that later)
 
 Add a buggy alert
 -----------------
@@ -61,6 +61,9 @@ It is this workflow which allows us to makes changes and deploy them using nscal
 	- System Deploy
 
 Pay particular attention to the fact that nscale will checkout repos using the sha of the latest commit, which will detach the HEAD.
+
+**Tip:**
+	Before writing code that you are building into a container, do a git status of that repo to make sure the HEAD isn't detached or else you will be writing code on an unnamed branch. Checkout to master or another branch before proceeding.
 
 Roll back
 ------------
