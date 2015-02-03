@@ -182,6 +182,7 @@ OS X:
 	open http://$(boot2docker ip):8000
 
 Linux:
-	open <a href="http://localhost:8000" target="_blank">http://localhost:9000</a>
+	open [localhost:8000](http://localhost:8000)
+	
 
 [Next up: exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md)
