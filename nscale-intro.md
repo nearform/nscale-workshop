@@ -128,9 +128,10 @@ Create a clean working folder on your machine and cd into it.
 ```
 To grab this system we run:
 ```bash
-nscale system clone git@github.com:nearform/nscaledemo.git
+git clone git@github.com:nearform/nscaledemo.git
+nscale system link nscaledemo
 ```
-nscale should have cloned this respository into your current working directory. You should now see a folder called nscaledemo. Let's check that nscale can see this with the `list` command:
+You should now see a folder called nscaledemo. Let's check that nscale can see this with the `list` command:
 ```bash
 nscale system list
 ```
@@ -140,11 +141,9 @@ Name                           Id
 nscaledemo                     e1144711-47bb-5931-9117-94f01dd20f6f
 ```
 Then enter the nscaledemo folder:
-
 ```bash
 cd nscaledemo
 ```
-
 ### Under the hood
 `nscale` uses a configuration file to tell it where to store its data. The default configuration is kept at ~/.nscale/config/config.json. Let's take a moment to inspect the configuration.
 
@@ -191,33 +190,31 @@ exports.topology = {
 };
 
 ```
-
 nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in system.json. Lets run a compile now:
 ```bash
-	nscale system compile nscaledemo development
+nscale system compile nscaledemo development
 ```
-
-This will run a compile of nscaledemo to the local target. Lets go ahead and take a look at the contents of system.json.
+This will run a compile of nscaledemo to the development target. Lets go ahead and take a look at the contents of system.json.
 
 ### Inspect the demo system
 Now that we have run a compile, let's use nscale to inspect the `nscaledemo` system:
 ```bash
-	nscale container list
+nscale container list
 ```
 If you are running the command outside of the nscaledemo folder, you
 need to:
 ```bash
-	nscale container list nscaledemo
+nscale container list nscaledemo
 ```
 We should see output similar to the following:
 ```bash
-	Name                 Type            Id                                                 
-	root                 blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c                               
-	web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb             
+Name                 Type            Id                                                 
+root                 blank-container 85d99b2c-06d0-5485-9501-4d4ed429799c                               
+web                  docker          9ddc6c027-9ce2-5fdg-9936-696d2b3789bb             
 ```
 There are two containers definitions: a blank root container and a docker container. Let's take a look at the revision history:
 ```bash
-	nscale revision list
+nscale revision list
 ```
 We should see a list of system revisions for the current system along with their IDs. 
 * With every compile, nscale syncs up with the latest code commits in your various repos. 
@@ -259,7 +256,7 @@ Specify the system ID or name if you aren't in the directory
 ```bash
 docker ps
 ```
-We should see that there is one running container. We can further verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
+We should see that there is one running container. We can further verify by opening a browser at $DOCKER_HOST (on OS X) or localhost (on Linux) port `8000`.
 
 OS X:
 open http://$(boot2docker ip):8000
