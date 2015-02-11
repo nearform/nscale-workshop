@@ -28,31 +28,31 @@ First, clone a system:
 ```bash
 git clone git@github.com:nearform/sudc-system.git
 cd sudc-system
-nsd sys link .
+nscale sys link .
 ```
 
 The system will be setted up for local development by issuing:
 
 ```bash
-nsd sys compile process
+nscale sys compile process
 ```
 
 Then, to download and install dependencies, launch:
 
 ```bash
-nsd cont buildall
+nscale cont buildall
 ```
 
 Finally, to start the system:
 
 ```bash
-nsd rev dep head
+nscale rev dep head development
 ```
 
 Point your browser to http://localhost:8000 to see the Startup Death
 Clock.
 
-As pointed out in the output of `nsd rev dep head`, you can launch
+As pointed out in the output of `nscale rev dep head`, you can launch
 
 ```
 tail -f ~/.nscale/log/998e0589-0936-4102-b859-d6192011c355.log
