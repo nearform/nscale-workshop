@@ -22,6 +22,14 @@ This guide is composed of two sections:
 <a name="existing"></a>
 Editing an existing system
 --------------------------
+It is this workflow which allows us to makes changes and deploy them using nscale:
+  
+  - Make changes in code
+  - Commit
+  - (optional) push to Github
+  - System compile
+  - Build relevant container(s)
+  - System Deploy
 
 First, clone a system:
 
@@ -31,10 +39,10 @@ cd sudc-system
 nscale sys link .
 ```
 
-The system will be setted up for local development by issuing:
+The system will be set up for local development by issuing:
 
 ```bash
-nscale sys compile process
+nscale sys compile development
 ```
 
 Then, to download and install dependencies, launch:
@@ -48,26 +56,44 @@ Finally, to start the system:
 ```bash
 nscale rev dep head development
 ```
+**Make the Edit**
+Pay particular attention to the fact that when building containers nscale, will checkout repos using the sha of the latest commit. This will detach the HEAD your repos. The danger is that you build containers which detaches the HEAD, edit code on an unreferenced branch, and then do a system compile which checks out the master branch in each repo. You could potentially lose work.
 
-Point your browser to http://localhost:8000 to see the Startup Death
-Clock.
+**Tip:**
+  Before writing code that you are building into a container, do a git status of that repo to make sure the HEAD isn't detached or else you will be writing code on an unnamed branch. Checkout to master or another branch before proceeding.
 
-As pointed out in the output of `nscale rev dep head`, you can launch
-
+cd into the workspace/sudc-web directory and run a git branch command. 
+If the HEAD is detached, then do 
+```bash
+git checkout master
 ```
-tail -f ~/.nscale/log/998e0589-0936-4102-b859-d6192011c355.log
+Open up `workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
+
+```js
+initialize: function () {
+    // Your code here
+    alert('Hello World!');
+}
+
+**cd into the sudc/workspace/sudc-web directory**, stage the changes and commit:
+```bash 
+git add .
+git commit -m "added alert"
+```
+Compile the system:
+```bash
+nscale sys compile sudc latest development
 ```
 
-Then, if you edit `sudc-system/workspace/sudc-web/web/index.js` and
-add a `console.log('hello world')` at the the end, like so:
-
-```
-echo "console.log('hello world')" >> workspace/sudc-web/web/index.js
+build the Web container:
+```bash
+nscale cont build sudc web
 ```
 
-You will see in the tailing log that the process have been automatically
-restarted.
-
+redeploy:
+```bash
+nscale rev deploy sudc latest development
+```
 
 <a name="new-system"></a>
 Setting up a new system with a dockerized database
