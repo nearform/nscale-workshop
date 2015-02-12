@@ -5,7 +5,7 @@ nscale-workshop
 
 ##Preliminary
 - [Docker Introduction](./docker-intro.md)
-- [Boot2docker OSX Installation using USB (Mac Users Only)](./nscale-workshop/blob/master/boot2docker-osx.md)
+- [Boot2docker OSX Installation using USB (Mac Users Only)](./boot2docker-osx.md)
 
 ##Nscale Exercises
 1. [Introduction to nscale](./master/1-nscale-intro.md)
