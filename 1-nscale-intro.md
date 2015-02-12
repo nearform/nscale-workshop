@@ -274,4 +274,4 @@ Stop the running docker container before moving on to the next exercise.
 docker ps
 docker stop <container id>
 ```
-[Next up: exercise 2](https://github.com/nearform/nscale-workshop/blob/master/ex2.md)
+[Next up: exercise 2](./2-create-a-system.md)

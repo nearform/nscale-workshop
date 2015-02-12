@@ -91,4 +91,4 @@ open http://$(boot2docker ip):8000
 Linux:
 open [localhost:8000](http://localhost:8000)
 
-[Next up: exercise 7] (https://github.com/nearform/nscale-workshop/edit/master/ex7.md)
+[Next up: exercise 7](./7-using-docker-images.md)

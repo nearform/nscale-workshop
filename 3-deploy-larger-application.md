@@ -185,4 +185,4 @@ Linux:
 open [localhost:8000](http://localhost:8000)
 	
 
-[Next up: exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md)
+[Next up: exercise 4](./4-config-&-logs.md)
