@@ -49,7 +49,7 @@ open http://$(boot2docker ip):8000
 Linux:
 open [localhost:8000](http://localhost:8000)
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/bugalert.png)
+![image](./img/bugalert.png)
 
 It is this workflow which allows us to makes changes and deploy them using nscale:
 	

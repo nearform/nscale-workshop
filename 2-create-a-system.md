@@ -1,4 +1,4 @@
-Build a system with NScale
+Create a System With NScale
 ===================
 
 This tutorial covers:
