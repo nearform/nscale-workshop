@@ -154,5 +154,5 @@ $ curl http://localhost:80
 Here's one we made earlier: 
 <https://github.com/nearform/nscale-workshop-intro-docker-sample>
 
-[Next up: nscale intro](./nscale-intro.md)
+[Next up: nscale intro](./1-nscale-intro.md)
 
