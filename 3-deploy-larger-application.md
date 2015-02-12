@@ -61,23 +61,23 @@ GUI
 ---
 Now we can take a look at the startup death clock system using the graphical interface. We just need to point our browser to <a href="http://localhost:9000" target="_blank">http://localhost:9000</a>.
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/systems.png)
+![image](./img/systems.png)
 
 We can go to the container view via the sudclocal link,
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/containers.png)
+![image](./img/containers.png)
 
 show the revision list by clicking on the Revisions tab,
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/revisions.png)
+![image](./img/revisions.png)
 
 show the system state by clicking on the System state tab,
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/topology.png)
+![image](./img/topology.png)
 
 and show the timeline by clicking on the System timeline tab.
 
-![image](https://raw.githubusercontent.com/nearform/nscale-workshop/master/img/timeline.png)
+![image](./img/timeline.png)
 
 Previewing the deployment
 -------------------------
