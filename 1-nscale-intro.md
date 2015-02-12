@@ -10,6 +10,9 @@ This tutorial covers:
 
 What is nscale?
 ---------------
+
+![image](./img/logo.png)
+
 `nscale` is an open source deployment management toolkit. After working on several microservice projects, we found there was a need to formalize a process for deploying microservice based systems so we could stop reinventing the wheel for each new project.
 
 `nscale` uses Docker to create and deploy containerised applications and services.
