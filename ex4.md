@@ -22,7 +22,7 @@ The kernel section defines the following:
 }
 ```
 
-	Information for AWS is also defined but this is not relevant for now
+Information for AWS is also defined. This is explored in a later tutorial.
 
 The modules section defines the following:
 
