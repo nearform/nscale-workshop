@@ -1,6 +1,8 @@
 nscale-workshop
 ===============
 
+![image](./img/logo.png)
+
 ##Preliminary
 - [Docker Introduction](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md)
 - [Boot2docker OSX Installation using USB (Mac Users Only)](https://github.com/nearform/nscale-workshop/blob/master/boot2docker-osx.md)
