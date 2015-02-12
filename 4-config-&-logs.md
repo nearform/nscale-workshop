@@ -76,7 +76,7 @@ For this workshop we are using just the virtualbox and boot2docker containers. N
 
 The `nscale` root folder looks as follows:
 
-![image](.img/configdir.png)
+![image](./img/configdir.png)
 
 Viewing the logs
 ----------------
