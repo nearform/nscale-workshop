@@ -48,7 +48,7 @@ npm install npm@latest -g --unsafe-perm
 npm install nscale -g --unsafe-perm
 ```
 
-node.js and nscale are now installed, launch it via `nsd ser start`.
+node.js and nscale are now installed, launch it via `nscale ser start`.
 
 User configuration
 ------------------
@@ -64,11 +64,11 @@ System set up
 -------------
 
 ```bash
-nsd login
+nscale login
 git clone https://github.com/nearform/sudc-system.git
 cd sudc-system
-nsd sys link .
-nsd sys list
+nscale sys link .
+nscale sys list
 ```
 
 We need to generate an ssh key with no passphrase for this project:
@@ -185,7 +185,7 @@ exports.topology = {
 Compile your topology with:
 
 ```bash
-nsd sys comp direct
+nscale sys comp direct
 ```
 
 Deploying!
@@ -194,7 +194,7 @@ Deploying!
 You can build all your container with:
 
 ```bash
-nsd cont buildall
+nscale cont buildall
 ```
 
 Go grab a cup of coffee, while nscale build everything for you.
@@ -202,7 +202,7 @@ Go grab a cup of coffee, while nscale build everything for you.
 Then, launch:
 
 ```
-nsd rev dep head
+nscale rev dep head
 ```
 
 To deploy the latest revision.

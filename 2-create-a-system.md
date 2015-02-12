@@ -1,4 +1,4 @@
-Build a system with NScale
+Create a System With NScale
 ===================
 
 This tutorial covers:
@@ -20,11 +20,9 @@ Let's go ahead and create a new system with:
 
 ```bash
 $ nscale sys create
-prompt: name:  workshop
-prompt: namespace:  nscale
-create system: workshop with namespace: nscale?
-prompt: confirm (y/n):  y
-ok
+? What is the system name? workshop
+? What is the system namespace? nscale
+? Confirm creating system "workshop" with namespace "nscale"? (Y/n) y
 ```
 
 Now we can check that everything is as expected:
@@ -43,7 +41,7 @@ including our new `nscale_workshop` system:
 The `nscale sys create` creates a new git repository in the current
 directory. Go ahead and have a look at the files in there.
 
-```
+```bash
 $ cd workshop
 $ tree # you may not have tree installed
 .
@@ -84,7 +82,18 @@ exports.root = {
   type: 'blank-container'
 };
 
-// add here more definitions
+// Example
+//
+// exports.web = {
+//   type: 'docker',
+//     specific: {
+//       repositoryUrl: 'git@github.com:nearform/nscaledemoweb.git',
+//       execute: {
+//         args: '-p 8000:8000 -d',
+//         exec: '/usr/bin/node index.js'
+//       }
+//     }
+// };
 ```
 
 To begin defining our system, we need to change it to:
@@ -113,12 +122,20 @@ Let's open `system.js` in you favorite editor. It currently looks like this:
 ```js
 exports.name = 'workshop';
 exports.namespace = 'nscale';
-exports.id = '2de30af9-fdc4-41ff-9b88-cd47eacb7f77';
+exports.id = '13fc4a5a-f1e3-4bc1-9acf-3ba8a7b65f6a';
 
 exports.topology = {
-  local: {
+  development: {
   }
 };
+
+// Example
+//
+// exports.topology = {
+//   development: {
+//     root: ['web']
+//   }
+// };
 ```
 
 This system is empty, let's add our containers:
@@ -196,7 +213,7 @@ f75ff4f3b2ecdf378ad… development  Matteo Collina <hello@matteocollina.com> 201
 
 And then we can ask that revision `development.json`:
 
-```bash
+```js
 $ nscale rev get f75ff dev # from the project folder
 {
   "name": "workshop",

@@ -1,17 +1,24 @@
 nscale-workshop
 ===============
 
-1. [Docker Introduction](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md)
-  1. [Boot2docker OSX Installation using USB](https://github.com/nearform/nscale-workshop/blob/master/boot2docker-osx.md)
-2. [Nscale Introduction](https://github.com/nearform/nscale-workshop/blob/master/nscale-intro.md)
-  1. [Exercise 2](https://github.com/nearform/nscale-workshop/blob/master/ex2.md) - Create a new system
-  2. [Exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md) - Deploy a larger application
-  3. [Exercise 4](https://github.com/nearform/nscale-workshop/blob/master/ex4.md) - Fixing a bug
-  4. [Exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md) - Rollback
-  5. [Exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md) - Automatic system fix
-  6. [Exercise 7](https://github.com/nearform/nscale-workshop/blob/master/ex7.md) - Using an image from Docker Hub
-  7. [Exercise 8](https://github.com/nearform/nscale-workshop/blob/master/ex8.md) - Deploying to AWS
-  8. [Exercise 9](https://github.com/nearform/nscale-workshop/blob/master/development-workflow.md) - Local development workflow, with a mixed container environment
-3. [Deploy directly via SSH](https://github.com/nearform/nscale-workshop/blob/master/direct-digitalocean.md) - Deploy to an already running machine, this examples is powered by ([DigitalOcean](do-referral).
+![image](./img/logo.png)
+
+##Preliminary
+- [Docker Introduction](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md)
+- [Boot2docker OSX Installation using USB (Mac Users Only)](https://github.com/nearform/nscale-workshop/blob/master/boot2docker-osx.md)
+
+##Nscale Exercises
+1. [Introduction to nscale](https://github.com/nearform/nscale-workshop/blob/master/nscale-intro.md)
+2. [Create a new system](https://github.com/nearform/nscale-workshop/blob/master/ex2.md)
+3. [Deploy a larger application](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
+4. [Fixing a bug](https://github.com/nearform/nscale-workshop/blob/master/ex4.md)
+5. [Rollback](https://github.com/nearform/nscale-workshop/blob/master/ex5.md)
+6. [Automatic system fix](https://github.com/nearform/nscale-workshop/blob/master/ex6.md)
+7. [Using an image from Docker Hub](https://github.com/nearform/nscale-workshop/blob/master/ex7.md)
+8. [Deploying to AWS](https://github.com/nearform/nscale-workshop/blob/master/ex8.md)
+
+##Extras
+- [Deploy directly via SSH to DigitalOcean](https://github.com/nearform/nscale-workshop/blob/master/direct-digitalocean.md)
+- [Development Workflow Examples](https://github.com/nearform/nscale-workshop/blob/master/development-workflow.md)
 
 [do-referral]: https://www.digitalocean.com/?refcode=c85081546a8e
