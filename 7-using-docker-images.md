@@ -11,7 +11,7 @@ This tutorial covers:
 Create a new System
 -------------------
 
-As done in [ex2.md](https://github.com/nearform/nscale-workshop/blob/master/ex2.md), let's go ahead and create a new system with:
+As done in [Exercise 2](./2-create-a-system.md), let's go ahead and create a new system with:
 
 ```bash
 $ nscale system create
@@ -152,4 +152,4 @@ you may need to install redis-tools
 sudo apt-get install redis-tools
 ```
 
-[Next up: exercise 8] (https://github.com/nearform/nscale-workshop/blob/master/ex8.md)
+[Next up: exercise 8] (./8-deploy-to-aws.md)

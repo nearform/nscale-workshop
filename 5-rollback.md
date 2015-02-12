@@ -108,4 +108,4 @@ open http://$(boot2docker ip):8000
 Linux:
 open [localhost:8000](http://localhost:8000)
 
-[Next up: exercise 6](https://github.com/nearform/nscale-workshop/blob/master/ex6.md)
+[Next up: exercise 6](./6-system-fix.md)

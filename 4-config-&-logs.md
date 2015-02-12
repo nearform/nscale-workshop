@@ -87,4 +87,4 @@ nscale server logs api.log
 nscale server logs web.log
 ```
 
-[Next up: exercise 5](https://github.com/nearform/nscale-workshop/blob/master/ex5.md)
+[Next up: exercise 5](./5-rollback.md)

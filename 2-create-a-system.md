@@ -67,7 +67,7 @@ Preparing the Application
 Containers should live in a git repository, this allows `nscale` to check
 out the repo and build the containers for us.
 
-Let's take the example we built in [exercise 1](https://github.com/nearform/nscale-workshop/blob/master/docker-intro.md), and place it in a git repository on github.
+Let's take the example we built in [exercise 1](./docker-intro.md), and place it in a git repository on github.
 
 In this tutorial, our test repo will be: git@github.com:nearform/nscale-workshop-intro-docker-sample.git
 
@@ -293,4 +293,4 @@ prepare the build.
 
 Thanks to this file, we can build multiple containers from the same git repository.
 
-[Next up: exercise 3](https://github.com/nearform/nscale-workshop/blob/master/ex3.md)
+[Next up: exercise 3](./3-deploy-larger-application.md)
