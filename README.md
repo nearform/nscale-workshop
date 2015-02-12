@@ -14,7 +14,7 @@ nscale-workshop
 4. [Fixing a bug](./4-config-&-logs.md)
 5. [Rollback](./5-rollback.md)
 6. [Automatic system fix](./6-system-fix.md)
-7. [Using an image from Docker Hub](./7-using-docker.md)
+7. [Using an image from Docker Hub](./7-using-docker-images.md)
 8. [Deploying to AWS](./8-deploy-to-aws.md)
 
 ##Extras
