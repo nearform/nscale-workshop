@@ -1,10 +1,10 @@
-Rollback
+Update & Rollback
 ========
 
 This tutorial covers:
-
-1. Rolling a deployed system back to a known good state
-2. Rolling a deployed system forward after applying a full fix
+1. Making a change to a system and deploying it.
+2. Rolling a deployed system back to a known good state
+3. Rolling a deployed system forward after applying a full fix
 
 Before Making any Changes
 -----------------
