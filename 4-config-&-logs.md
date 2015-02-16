@@ -87,4 +87,4 @@ nscale server logs api.log
 nscale server logs web.log
 ```
 
-[Next up: exercise 5](./5-rollback.md)
+[Next up: exercise 5](./5update-&-rollback.md)
