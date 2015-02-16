@@ -77,9 +77,9 @@ We need to generate an ssh key with no passphrase for this project:
 ssh-keygen -t rsa
 ```
 
-Type no passphrase, and save it as `sudc-key`, not as `~/.ssh/sudc-key`.
+Hit enter to leave a blank passphrase, and save it as `sudc-key`, not as `~/.ssh/sudc-key`.
 
-Creating a new machine
+Creating a new machine+
 ----------------------
 
 Open your Digital Ocean admin panel.
@@ -89,7 +89,7 @@ configure it with the newly created ssh key:
 
 ![image](./img/digital-ocean-add-key.png)
 
-Note the IP address of the machine, for this tutorial is: 178.62.80.16.
+Note the IP address of the machine, for this tutorial it's: 178.62.80.16. Replace this with your own.
 
 Test that you can access the machine from the nscale machine with:
 
@@ -104,39 +104,28 @@ In order to configure the nscale analyzer to accurately detect the
 containers running on the target machine, you need to edit the
 `~/.nscale/config/config.json` file and replace:
 
-```
-{
-  ...
-  "modules": {
-    ...
-    "analysis": {
+```js
+...
+"analysis": {
       "require": "nscale-local-analyzer",
       "specific": {
       }
     }
-  }
-  ...
-}
+...
 ```
 
 to:
 
 
-```
-{
-  ...
-  "modules": {
-    ...
-    "analysis": {
+```js
+...
+  "analysis": {
       "require": "nscale-direct-analyzer",
       "specific": {
         "user": "root",
-        "identityFile": "/root/sudc-system/sudc-key"
+        "identityFile": "/root/sudc-key"
       }
-    }
-  }
   ...
-}
 ```
 
 (Adjust this config if you cloned sudc-system to another folder)
@@ -151,7 +140,7 @@ Create a new file named `definitions/machines.js` in the project with content:
 
 ```js
 exports.machine = {
-  type: 'container'
+  type: 'blank-container'
 };
 ```
 
@@ -171,7 +160,7 @@ exports.topology = {
       contains: ['doc', 'hist', 'real', 'web'],
       specific: {
         user: 'root',
-        identityFile: 'sudc-key',
+        identityFile: '/root/sudc-system/sudc-key',
         ipAddress: '178.62.80.16'
       }
     }
@@ -194,15 +183,15 @@ Deploying!
 You can build all your container with:
 
 ```bash
-nscale cont buildall
+nscale cont buildall sudc-system
 ```
 
-Go grab a cup of coffee, while nscale build everything for you.
+Go grab a cup of coffee, while nscale builds everything for you.
 
 Then, launch:
 
-```
-nscale rev dep head
+```bash
+nscale rev dep sudc-system latest direct
 ```
 
 To deploy the latest revision.
