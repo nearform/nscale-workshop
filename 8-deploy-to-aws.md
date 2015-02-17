@@ -20,7 +20,7 @@ nscale should be installed on AWS in a similar manner to a direct linux install:
 
 * add yourself to the docker group using:
 ```bash
-$sudo usermod -G docker -a $(whoami)`
+$sudo usermod -G docker -a $(whoami)
 ```
 For these changes to come into effect you usually need to log out and log back in.
 close the ssh connection with your instance with ```exit``` and reconnect.
@@ -42,7 +42,7 @@ create a file `config` in the ~/.ssh folder on your local machine and insert the
 host *
  ForwardAgent yes
 ```
-This allows the remote instance to use your local ssh key for cloning Github repos.
+This allows the remote instance to use your local ssh key for cloning Github repos. You may need to log out and back in to see the effect of this.
 
 Once the above dependencies have been met you can proceed to install nscale using 
 ```bash
@@ -283,6 +283,6 @@ nscale system fix sudc
 ```
 nscale will now boot up a replacement machine and deploy the appropriate containers to it, onece the fix has completed double check it by running:
 ```bash
-	nscale system check sudc
+nscale system check sudc
 ```
 Congratulations - you are now an nscale AWS ninja!
