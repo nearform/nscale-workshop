@@ -157,8 +157,7 @@ Now lets look at the nscaledemo repository. It contains the following files:
 ├── README.md 
 ├── definitions
 │   └── services.js
-├── system.js
-└── system.json
+└── system.js
 ```
 #### definitions/services.js
 services.js contains some javascript that defines the two containers. 
@@ -193,11 +192,11 @@ exports.topology = {
 };
 
 ```
-nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in system.json. Lets run a compile now:
+nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in development.json. Lets run a compile now:
 ```bash
 nscale system compile nscaledemo development
 ```
-This will run a compile of nscaledemo to the development target. Lets go ahead and take a look at the contents of system.json.
+This will run a compile of nscaledemo to the development target. Lets go ahead and take a look at the contents of development.json.
 
 ### Inspect the demo system
 Now that we have run a compile, let's use nscale to inspect the `nscaledemo` system:
