@@ -46,7 +46,7 @@ This allows the remote instance to use your local ssh key for cloning Github rep
 
 Once the above dependencies have been met you can proceed to install nscale using 
 ```bash
-$sudo npm install -g nscasle
+$sudo npm install -g nscale
 ```
 
 Recommended
