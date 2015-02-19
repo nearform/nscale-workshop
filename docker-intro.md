@@ -22,9 +22,11 @@ VMs.
 
 ### Installation
 
-If you are Linux, follow https://github.com/nearform/nscale/wiki/Linux-Setup-Guide
+If you are Linux (Ubuntu), follow https://docs.docker.com/installation/ubuntulinux/
 
-If you are on Mac OS X, follow https://github.com/nearform/nscale/wiki/OS-X-Setup-Guide
+If you are on Mac OS X, follow https://docs.docker.com/installation/mac/
+
+Alternatively, see Docker's list of installation guides [here](https://docs.docker.com/installation/).
 
 If any software listed in the guides is already installed on your system, you can
 of course skip those steps. 
