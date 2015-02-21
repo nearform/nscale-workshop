@@ -1,4 +1,4 @@
-Use an image from Docker Hub
+Use an image from Docker Hub.
 ==================================
 
 This tutorial covers:
