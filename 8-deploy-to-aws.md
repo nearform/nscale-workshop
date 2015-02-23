@@ -178,7 +178,7 @@ nscale system link sudc-system
 This will pull down the code for the Startup Death Clock system. In order to work with the AWS version of the system we will need to switch branches. to do this:
 ```bash
 cd /home/ubuntu/work/sudc/sudc-system
-git checkout aws
+git checkout v0.14
 ```
 Lets take a look at the differences between the local configuration (on the master branch) and the AWS version:
 
