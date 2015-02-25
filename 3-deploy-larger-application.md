@@ -43,16 +43,16 @@ Build the system
 Let's go ahead and build the containers ready for deployment:
 
 ```bash
-nscale container buildall sudc
+nscale container buildall sudc dev
 ```
 
 Alternatively, you can build all the containers by themselves:
 
 ```bash
-nscale container build sudc hist
-nscale container build sudc real
-nscale container build sudc doc
-nscale container build sudc web
+nscale container build sudc hist dev
+nscale container build sudc real dev
+nscale container build sudc doc dev
+nscale container build sudc web dev
 ```
 
 After those have all completed we should have four containers ready for deployment.
@@ -183,6 +183,5 @@ open http://$(boot2docker ip):8000
 
 Linux:
 open [localhost:8000](http://localhost:8000)
-	
 
 [Next up: exercise 4](./4-config-&-logs.md)

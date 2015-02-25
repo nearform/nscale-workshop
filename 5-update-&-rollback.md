@@ -38,7 +38,7 @@ git commit -m "Added buggy alert"
 Build the container and deploy the latest revision:
 ```bash
 nscale system compile sudc development
-nscale container build sudc web
+nscale container build sudc web development
 nscale revision deploy sudc latest development
 ```
 
