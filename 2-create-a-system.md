@@ -157,14 +157,14 @@ This abstract system definition __must__ be compiled into the
 We can define an unlimited number of keys there.
 In order to compile, we run:
 
-```js
-nscale system compile workshop development
+```bash
+nscale system compile workshop
 ```
 
 Now, let's build our containers:
 
 ```bash
-$ nscale container build workshop web
+$ nscale container build workshop latest web
 ```
 
 We'll check the revision list again:

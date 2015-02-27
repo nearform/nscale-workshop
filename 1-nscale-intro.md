@@ -194,9 +194,9 @@ exports.topology = {
 ```
 nscale 'compiles' containers defined under the definitions folder along with information in system.js into a full system definition. The result of this compilation process is help in development.json. Lets run a compile now:
 ```bash
-nscale system compile nscaledemo development
+nscale system compile nscaledemo
 ```
-This will run a compile of nscaledemo to the development target. Lets go ahead and take a look at the contents of development.json.
+This will run a compile of nscaledemo. Lets go ahead and take a look at the contents of development.json.
 
 ### Inspect the demo system
 Now that we have run a compile, let's use nscale to inspect the `nscaledemo` system:

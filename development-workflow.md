@@ -83,7 +83,7 @@ nscale sys compile
 
 build the Web container:
 ```bash
-nscale cont build web process
+nscale cont build web latest process
 ```
 
 redeploy:
@@ -382,8 +382,8 @@ Our little REST key/value store is ready to go!
 Go back to your system folder (`cd ../../`) and then run:
 
 ```
-nsd cont build web dev
-nsd rev dep head dev
+nsd cont build web latest process
+nsd rev dep head process
 ```
 
 And then you can test your little REST server as above!
