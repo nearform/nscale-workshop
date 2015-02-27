@@ -174,7 +174,7 @@ exports.topology = {
 Compile your topology with:
 
 ```bash
-nscale sys comp direct
+nscale sys comp
 ```
 
 Deploying!
@@ -183,7 +183,7 @@ Deploying!
 You can build all your container with:
 
 ```bash
-nscale cont buildall sudc-system
+nscale cont buildall sudc-system direct
 ```
 
 Go grab a cup of coffee, while nscale builds everything for you.
