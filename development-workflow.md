@@ -23,7 +23,7 @@ This guide is composed of two sections:
 Editing an existing system
 --------------------------
 It is this workflow which allows us to makes changes and deploy them using nscale:
-  
+
   - Make changes in code
   - Commit
   - (optional) push to Github
@@ -42,31 +42,21 @@ nscale sys link .
 The system will be set up for local development by issuing:
 
 ```bash
-nscale sys compile development
+nscale sys compile
 ```
 
 Then, to download and install dependencies, launch:
 
 ```bash
-nscale cont buildall latest development
+nscale cont buildall latest process
 ```
 
 Finally, to start the system:
 
 ```bash
-nscale rev dep head development
+nscale rev dep head process
 ```
-**Make the Edit**
-Pay particular attention to the fact that when building containers nscale, will checkout repos using the sha of the latest commit. This will detach the HEAD your repos. The danger is that you build containers which detaches the HEAD, edit code on an unreferenced branch, and then do a system compile which checks out the master branch in each repo. You could potentially lose work.
 
-**Tip:**
-  Before writing code that you are building into a container, do a git status of that repo to make sure the HEAD isn't detached or else you will be writing code on an unnamed branch. Checkout to master or another branch before proceeding.
-
-cd into the workspace/sudc-web directory and run a git branch command. 
-If the HEAD is detached, then do 
-```bash
-git checkout master
-```
 Open up `workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
 
 ```js
@@ -76,23 +66,24 @@ initialize: function () {
 }
 
 **cd into the sudc/workspace/sudc-web directory**, stage the changes and commit:
-```bash 
+```bash
 git add .
 git commit -m "added alert"
 ```
-Compile the system:
+
+Compile the system (from the main system folder):
 ```bash
-nscale sys compile sudc latest development
+nscale sys compile
 ```
 
 build the Web container:
 ```bash
-nscale cont build sudc web latest development
+nscale cont build web latest process
 ```
 
 redeploy:
 ```bash
-nscale rev deploy sudc latest development
+nscale rev deploy sudc latest process
 ```
 
 <a name="new-system"></a>
@@ -107,16 +98,16 @@ Redis.
 Launch:
 
 ```bash
-$ nsd sys create
-? What is the system name? nscale-kv
+$ nscale sys create
+? What is the system name? nscalekv
 ? What is the system namespace? nscalekv
-? Confirm creating system "nscale-kv" with namespace "nscale-kv"? Yes
+? Confirm creating system "nscalekv" with namespace "nscalekv"? (Y/n) y
 ```
 
 Then:
 
 ```bash
-cd nscale-kv
+cd nscalekv
 ```
 
 ### Add a database
@@ -140,9 +131,7 @@ Then, edit the topology section of `system.js` into:
 
 ```js
 exports.topology = {
-  local: {
-  },
-  process: {
+  development: {
     root: ['redis']
   }
 };
@@ -151,9 +140,9 @@ exports.topology = {
 Then, compile and build this topology:
 
 ```bash
-nsd sys comp process
-nsd cont buildall
-nsd rev dep head
+nscale sys comp
+nscale cont buildall
+nscale rev dep head dev
 ```
 
 To check that everything is fine, launch:
@@ -197,9 +186,7 @@ and edit the topology section of `system.js` into:
 
 ```js
 exports.topology = {
-  local: {
-  },
-  process: {
+  development: {
     root: ['web', 'redis']
   }
 };
@@ -208,8 +195,8 @@ exports.topology = {
 Then launch:
 
 ``` bash
-nsd sys comp process
-nsd cont build web
+nscale sys comp process
+nscale cont build web
 ```
 
 The latest command will fail, because we did not add a `package.json`:
@@ -390,8 +377,8 @@ Our little REST key/value store is ready to go!
 Go back to your system folder (`cd ../../`) and then run:
 
 ```
-nsd cont build web
-nsd rev dep head
+nscale cont build web latest process
+nscale rev dep head process
 ```
 
 And then you can test your little REST server as above!
