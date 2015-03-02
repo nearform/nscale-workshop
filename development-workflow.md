@@ -142,7 +142,7 @@ Then, edit the topology section of `system.js` into:
 exports.topology = {
   local: {
   },
-  development: {
+  process: {
     root: ['redis']
   }
 };
