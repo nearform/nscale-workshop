@@ -48,7 +48,7 @@ nscale sys compile development
 Then, to download and install dependencies, launch:
 
 ```bash
-nscale cont buildall
+nscale cont buildall latest development
 ```
 
 Finally, to start the system:
@@ -87,7 +87,7 @@ nscale sys compile sudc latest development
 
 build the Web container:
 ```bash
-nscale cont build sudc web
+nscale cont build sudc web latest development
 ```
 
 redeploy:
@@ -142,7 +142,7 @@ Then, edit the topology section of `system.js` into:
 exports.topology = {
   local: {
   },
-  process: {
+  development: {
     root: ['redis']
   }
 };

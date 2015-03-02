@@ -164,7 +164,7 @@ nscale system compile workshop development
 Now, let's build our containers:
 
 ```bash
-$ nscale container build workshop web
+$ nscale container build workshop web latest development
 ```
 
 We'll check the revision list again:

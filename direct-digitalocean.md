@@ -183,7 +183,7 @@ Deploying!
 You can build all your container with:
 
 ```bash
-nscale cont buildall sudc-system
+nscale cont buildall sudc-system latest direct
 ```
 
 Go grab a cup of coffee, while nscale builds everything for you.

@@ -38,7 +38,7 @@ git commit -m "Added buggy alert"
 Build the container and deploy the latest revision:
 ```bash
 nscale system compile sudc development
-nscale container build sudc web
+nscale container build sudc web latest development
 nscale revision deploy sudc latest development
 ```
 
@@ -98,7 +98,7 @@ git revert HEAD --no-edit
 Roll forward the change:
 ```bash
 nscale system compile sudc development
-nscale container build sudc web
+nscale container build sudc web latest development
 nscale revision deploy sudc latest development
 ```	
 Check the site is working:
