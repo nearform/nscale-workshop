@@ -237,10 +237,10 @@ nscale container buildall sudc
 ```
 Alternatively, you can build all the containers by themselves:
 
-	nscale container build sudc hist
-	nscale container build sudc real
-	nscale container build sudc doc
-	nscale container build sudc web
+	nscale container build sudc hist latest aws
+	nscale container build sudc real latest aws
+	nscale container build sudc doc latest aws
+	nscale container build sudc web latest aws
 
 After those have all completed we should have four containers ready for deployment.
 
@@ -269,20 +269,20 @@ Check and Fix on AWS
 --------------------
 Now that we have a deployed working system on AWS, lets just check that everything is in order by running an nscale check:
 ```bash
-nscale system check sudc
+nscale system check sudc aws
 ```
 The check command will run an analysis against the deployed system and compare it to your desired system configuration. This may take a few moments to run, but nscale should now respond that all is well with your deployment. Lets break something!
 
 Go into the AWS management console and kill the SUDC front end machine. Now run the check again on the management host:
 ```bash
-nscale system check sudc
+nscale system check sudc aws
 ```
 This time nscale should report that the system is broked and present a remedial action plan. To go ahead and fix the system execute:
 ```bash
-nscale system fix sudc
+nscale system fix sudc aws
 ```
 nscale will now boot up a replacement machine and deploy the appropriate containers to it, onece the fix has completed double check it by running:
 ```bash
-nscale system check sudc
+nscale system check sudc aws
 ```
 Congratulations - you are now an nscale AWS ninja!

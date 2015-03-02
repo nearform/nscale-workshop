@@ -43,7 +43,7 @@ Build the system
 Let's go ahead and build the containers ready for deployment:
 
 ```bash
-nscale container buildall sudc
+nscale container buildall sudc latest development
 ```
 
 Alternatively, you can build all the containers by themselves:

@@ -115,7 +115,7 @@ nscale system compile registry development
 Now, let's build our containers:
 
 ```bash
-$ nscale container buildall registry
+$ nscale container buildall registry latest development
 ```
 
 We'll check the revision list again:
