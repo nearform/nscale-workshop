@@ -19,8 +19,11 @@ nscale should be installed on AWS in a similar manner to a direct linux install:
 * connect to your newly booted VM and install docker as per the instructions [here](http://docs.docker.com/installation/ubuntulinux/)
 
 * add yourself to the docker group using:
-
-	`$sudo usermod -G docker -a $(whoami)`
+```bash
+$sudo usermod -G docker -a $(whoami)
+```
+For these changes to come into effect you usually need to log out and log back in.
+close the ssh connection with your instance with ```exit``` and reconnect.
 
 * It is recommended you install the build-essentials package. Many default AMIs do not come with packages such as make and g++. This will ensure you have the packages required for some npm modules to work. Failing to do so may lead to problems installing nscale depending on the AMI you launched.
 
@@ -32,14 +35,23 @@ nscale should be installed on AWS in a similar manner to a direct linux install:
     * git config --global user.name "your name"
     * git config --global user.email "you@somewhere.com"
 
+Enable SSH Agent Forwarding
+----------------------------
+create a file `config` in the ~/.ssh folder on your local machine and insert the following:
+```
+host *
+ ForwardAgent yes
+```
+This allows the remote instance to use your local ssh key for cloning Github repos. You may need to log out and back in to see the effect of this.
+
 Once the above dependencies have been met you can proceed to install nscale using 
+```bash
+$sudo npm install -g nscale
+```
 
-    $sudo npm install -g nscasle
-
-You should also make the confiugration changes as outlined [here](https://github.com/nearform/nscale). Specifically remember to set group permissions for the ubuntu user to allow access to docker commands without requiring sudo:
-
-    sudo usermod -G docker -a $(whoami)
-
+Recommended
+----------------------
+To make life easier, there is a powerful tool called SSHFS which allows you to mount a remote file system locally. This lets you view files on your remote instance in your file browser and you'll be able to edit them using graphical editors. Check out the guide to using it [here](http://www.emreakkas.com/linux-tips/how-to-mount-amazon-ec2-drive-locally-fuse-sshfs)
 
 Configuring AMIs for use with nscale
 ------------------------------------
@@ -49,7 +61,7 @@ A base AMI configured for management by nscale should be created. We can just cr
 * Image > Create Image.
 * Follow the steps provided.
 
-See [here.] (http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-CreateImage.html) if you would prefer to use the AWS Command Line Interface tools.   
+See [here.](http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-CreateImage.html) if you would prefer to use the AWS Command Line Interface tools.   
 
 Once the server has been imaged, make a note of the ami identifier and log back into the running management system.
 
@@ -73,15 +85,16 @@ In order to operate correctly on AWS the nscale coniguration file (~/.nscale/con
 
 A full AWS confiuration file should look similar to the following:
 
-```
+```js
 {
   "kernel": {
-    "systemsRoot": "/home/ubuntu/.nscale/data/systems",
+    "port": "8010",
+    "root": "/home/ubuntu/.nscale",
     "user": "ubuntu",
-    "identityFile": "PATH_TO_YOUR_KEYFILE.pem",
-    "region": "YOUR_REGION",
-    "accessKeyId": "YOUR_KEY",
-    "secretAccessKey": "YOUR_SECRET_KEY"
+    "identityFile": "FULL_PATH_TO_YOUR_KEY.pem",
+    "region": "us-west-2",
+    "accessKeyId": "XXXXXXXXXXXXXXXXX",
+    "secretAccessKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   },
   "api": {
   },
@@ -101,7 +114,8 @@ A full AWS confiuration file should look similar to the following:
     },
     "analysis": {
       "require": "nscale-aws-analyzer",
-      "specific": {}
+      "specific": {
+      }
     }
   },
   "containers": [{
@@ -109,8 +123,8 @@ A full AWS confiuration file should look similar to the following:
     "type": "aws-elb",
     "specific": {
       "region": "us-west-2",
-      "defaultSubnetId": "subnet-nnn",
-      "defaultVpcId": "vpc-nnn"
+      "defaultSubnetId": "subnet-xxxxxxxx",
+      "defaultVpcId": "vpc-xxxxxxxx"
       }
   },
   {
@@ -118,8 +132,8 @@ A full AWS confiuration file should look similar to the following:
     "type": "aws-sg",
       "specific": {
       "region": "us-west-2",
-      "defaultSubnetId": "subnet-nnn",
-      "defaultVpcId": "vpc-nnn"
+      "defaultSubnetId": "subnet-xxxxxxxx",
+      "defaultVpcId": "vpc-xxxxxxxx"
     }
   },
   {
@@ -127,9 +141,9 @@ A full AWS confiuration file should look similar to the following:
     "type": "aws-ami",
     "specific": {
       "region": "us-west-2",
-      "defaultImageId": "ami-nnn",
-      "defaultSubnetId": "subnet-nnn",
-      "defaultVpcId": "vpc-nnn"
+      "defaultImageId": "ami-xxxxxxxx",
+      "defaultSubnetId": "subnet-xxxxxxxx",
+      "defaultVpcId": "vpc-xxxxxxxx"
     }
   },
   {
@@ -157,14 +171,15 @@ Deploying into AWS
 Now that we have configured our AWS setup lets proceed to deploy a system into AWS. To do this we will clone and deploy the startup death clock.
 
 Lets get started by cloning the repository onto our AWS management system. Firstly cd into a working folder lets say /home/ubuntu/work/sudc.
-
-	nsd system clone git@github.com:nearform/sudc-system.git
-
+```bash
+git clone git@github.com:nearform/sudc-system.git
+nscale system link sudc-system
+```
 This will pull down the code for the Startup Death Clock system. In order to work with the AWS version of the system we will need to switch branches. to do this:
-
-	cd /home/ubuntu/work/sudc/sudc-system
-	git checkout aws
-
+```bash
+cd /home/ubuntu/work/sudc/sudc-system
+git checkout v0.14
+```
 Lets take a look at the differences between the local configuration (on the master branch) and the AWS version:
 
 ####Infrastructure
@@ -175,7 +190,7 @@ The AWS version contains an additional file awsInfrastructure.js, which contains
  * awsMachine - base AMI definition
 
 ####Topology
-The AWS version also contains an updated topology which is specific for deployment into our AWS infrastructure. The topology section is as follows:
+The AWS version also contains an updated topology in system.js which is specific for deployment into our AWS infrastructure. The topology section is as follows:
 
 ```
   aws: {
@@ -196,16 +211,18 @@ In order to make this work we need to make some minor adjustments to the ids spe
   * under awsWebSg change the VpcId setting to match your VPC
   * under awsMachine change the ImageId to match your ami id
 
+
+
 ####Compile
 
 Lets now go ahead and compile for aws
-
-	nsd system compile sudc aws
-
+```bash
+nscale system compile sudc aws
+```
 Now let's take a look at the system definition:
-
-	nsd container list sudc
-
+```bash
+nscale container list sudc
+```
 You should see the following containers:
 
 	web                  docker
@@ -215,47 +232,29 @@ You should see the following containers:
 
 ####Build the system
 Let's go ahead and build the containers ready for deployment:
-
-	nsd container buildall sudc
-
+```bash
+nscale container buildall sudc
+```
 Alternatively, you can build all the containers by themselves:
 
-	nsd container build sudc hist
-	nsd container build sudc real
-	nsd container build sudc doc
-	nsd container build sudc web
+	nscale container build sudc hist latest aws
+	nscale container build sudc real latest aws
+	nscale container build sudc doc latest aws
+	nscale container build sudc web latest aws
 
 After those have all completed we should have four containers ready for deployment.
 
 ####Deploy the system
-Now that we have an AWS system definintion and a set of containers to deploy, we can go ahead and push our system out onto AWS. to do this lets take a look at the local revision list
-
-	nsd revision list
-
-You should see something similar to the following:
-
-```
-revision             deployed who                                                     time                      description
-136c840f016c57d0e23… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:10:11.000Z  built container: 2b36df5faa5c92262aa675cd0a07312a…
-31d0cff07829dc15e29… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:29.000Z  built container: 51df875511be6f4951a1bd00610db2a9…
-7e48d13a98746c8356a… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:09:09.000Z  built container: f34344ef6f773c3e59b9cf84d01bf0ff…
-1483ec749e9202dde10… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:08:46.000Z  built container: 25a6d9868347b906345513aaf99e45ad…
-5cab4567fef325bba9f… false    John Doe <john.doe@gmail.com>                           2014-09-08T12:06:24.000Z  first commit
-3ebb8b5b986d76e59e9… false    Peter Elger <elger.peter@gmail.com>                     2014-09-08T08:16:00.000Z  added system definition
-644891e6df77a8de7b2… false    Peter Elger <elger.peter@gmail.com>                     2014-09-07T18:56:23.000Z  first commit
-```
-Note that your specific output will differ to the above, particularly the revision numbers will be unique to your changes.
+Now that we have an AWS system definintion and a set of containers to deploy, we can go ahead and push our system out onto AWS. 
 
 Lets first run a preview:
-
-	nsd revision preview sudc <revision id>
-
-Where revision id should be the id at the top of the revision list.
-
+```bash
+nscale revision preview sudc latest aws
+```
 This will run an analysis against your configured AWS region and may take several seconds to complete. The preview should determine that a full deployment is required. nscale will show you a list of commands that will be executed against your infrastrcutre upon deployment. You should review this list to ensure that you are comfortable with the changes. If you are lets not go ahead and deploy.
-
-	nsd revision deploy sudc <revision id>
-
+```bash
+nscale revision deploy sudc latest aws
+```
 nscale will no go ahead and deploy the SUDC system into your infrastructure. The following actions will be taken:
 
 * create a new load balancer awsWebElb
@@ -269,21 +268,21 @@ Deployment may take several minutes depending on AWS machine instance spin up ti
 Check and Fix on AWS
 --------------------
 Now that we have a deployed working system on AWS, lets just check that everything is in order by running an nscale check:
-
-	nsd system check sudc
-
+```bash
+nscale system check sudc aws
+```
 The check command will run an analysis against the deployed system and compare it to your desired system configuration. This may take a few moments to run, but nscale should now respond that all is well with your deployment. Lets break something!
 
 Go into the AWS management console and kill the SUDC front end machine. Now run the check again on the management host:
-
-	nsd system check sudc
-
+```bash
+nscale system check sudc aws
+```
 This time nscale should report that the system is broked and present a remedial action plan. To go ahead and fix the system execute:
-
-	nsd system fix sudc
-
+```bash
+nscale system fix sudc aws
+```
 nscale will now boot up a replacement machine and deploy the appropriate containers to it, onece the fix has completed double check it by running:
-
-	nsd system check sudc
-
+```bash
+nscale system check sudc aws
+```
 Congratulations - you are now an nscale AWS ninja!

@@ -22,52 +22,69 @@ This guide is composed of two sections:
 <a name="existing"></a>
 Editing an existing system
 --------------------------
+It is this workflow which allows us to makes changes and deploy them using nscale:
+
+  - Make changes in code
+  - Commit
+  - (optional) push to Github
+  - System compile
+  - Build relevant container(s)
+  - System Deploy
 
 First, clone a system:
 
 ```bash
 git clone git@github.com:nearform/sudc-system.git
 cd sudc-system
-nsd sys link .
+nscale sys link .
 ```
 
-The system will be setted up for local development by issuing:
+The system will be set up for local development by issuing:
 
 ```bash
-nsd sys compile process
+nscale sys compile
 ```
 
 Then, to download and install dependencies, launch:
 
 ```bash
-nsd cont buildall
+nscale cont buildall latest process
 ```
 
 Finally, to start the system:
 
 ```bash
-nsd rev dep head
+nscale rev dep head process
 ```
 
-Point your browser to http://localhost:8000 to see the Startup Death
-Clock.
+Open up `workspace/sudc-web/web/public/js/app.js` and add an alert after the 'Your code here' comment:
 
-As pointed out in the output of `nsd rev dep head`, you can launch
+```js
+initialize: function () {
+    // Your code here
+    alert('Hello World!');
+}
 
-```
-tail -f ~/.nscale/log/998e0589-0936-4102-b859-d6192011c355.log
-```
-
-Then, if you edit `sudc-system/workspace/sudc-web/web/index.js` and
-add a `console.log('hello world')` at the the end, like so:
-
-```
-echo "console.log('hello world')" >> workspace/sudc-web/web/index.js
+**cd into the sudc/workspace/sudc-web directory**, stage the changes and commit:
+```bash
+git add .
+git commit -m "added alert"
 ```
 
-You will see in the tailing log that the process have been automatically
-restarted.
+Compile the system (from the main system folder):
+```bash
+nscale sys compile
+```
 
+build the Web container:
+```bash
+nscale cont build web latest process
+```
+
+redeploy:
+```bash
+nscale rev deploy sudc latest process
+```
 
 <a name="new-system"></a>
 Setting up a new system with a dockerized database
@@ -81,16 +98,16 @@ Redis.
 Launch:
 
 ```bash
-$ nsd sys create
-? What is the system name? nscale-kv
+$ nscale sys create
+? What is the system name? nscalekv
 ? What is the system namespace? nscalekv
-? Confirm creating system "nscale-kv" with namespace "nscale-kv"? Yes
+? Confirm creating system "nscalekv" with namespace "nscalekv"? (Y/n) y
 ```
 
 Then:
 
 ```bash
-cd nscale-kv
+cd nscalekv
 ```
 
 ### Add a database
@@ -114,9 +131,7 @@ Then, edit the topology section of `system.js` into:
 
 ```js
 exports.topology = {
-  local: {
-  },
-  process: {
+  development: {
     root: ['redis']
   }
 };
@@ -125,9 +140,9 @@ exports.topology = {
 Then, compile and build this topology:
 
 ```bash
-nsd sys comp process
-nsd cont buildall
-nsd rev dep head
+nscale sys comp
+nscale cont buildall
+nscale rev dep head dev
 ```
 
 To check that everything is fine, launch:
@@ -171,9 +186,7 @@ and edit the topology section of `system.js` into:
 
 ```js
 exports.topology = {
-  local: {
-  },
-  process: {
+  development: {
     root: ['web', 'redis']
   }
 };
@@ -182,8 +195,8 @@ exports.topology = {
 Then launch:
 
 ``` bash
-nsd sys comp process
-nsd cont build web
+nscale sys comp process
+nscale cont build web
 ```
 
 The latest command will fail, because we did not add a `package.json`:
@@ -364,8 +377,8 @@ Our little REST key/value store is ready to go!
 Go back to your system folder (`cd ../../`) and then run:
 
 ```
-nsd cont build web
-nsd rev dep head
+nscale cont build web latest process
+nscale rev dep head process
 ```
 
 And then you can test your little REST server as above!
