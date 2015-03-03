@@ -204,7 +204,7 @@ The AWS version also contains an updated topology in system.js which is specific
 The topology section defines how the service containers are distributed amongst machine instances.
 
 ####Edit
-In order to make this work we need to make some minor adjustments to the ids specified in the configuration files:
+In order to make this work we need to make some minor adjustments to the ids specified in the ```awsInfrastructure.js``` file:
 
 * replace AMI-ID - open the file definitions/awsInfrastructure
   * under awsWebElb change the AvailabilityZone setting to match your availability zone
