@@ -3,6 +3,9 @@ nscale-workshop
 
 ![image](./img/logo.png)
 
+##This repository has been deprecated!
+___All documents have been moved to our [nscale-docs](https://github.com/nearform/nscale-docs) repo.___
+
 ##Preliminary
 - [Docker Introduction](./docker-intro.md)
 - [Boot2docker OSX Installation using USB (Mac Users Only)](./boot2docker-osx.md)
